@@ -8,28 +8,6 @@ class AboutPage extends StatelessWidget {
     void placeholderCallbackForButtons() {}
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('About Us'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-          tooltip: 'Back',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/',
-              (route) => false,
-            ),
-            child: const Text(
-              'Home',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

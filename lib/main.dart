@@ -52,7 +52,11 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Home'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(context).pushNamed('/about'),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (_) => const AboutPage()),
+              );
+            },
             child: const Text(
               'About',
               style: TextStyle(color: Colors.white),

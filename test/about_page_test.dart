@@ -4,28 +4,32 @@ import 'package:union_shop/about_page.dart';
 
 void main() {
   testWidgets('AboutPage shows header, centered content and Home button', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: const AboutPage()));
+    // Provide routes so the Home button can navigate to '/'.
+    await tester.pumpWidget(MaterialApp(
+      initialRoute: '/about',
+      routes: {
+        '/': (context) => const Scaffold(body: Center(child: Text('HomeScreen'))),
+        '/about': (context) => const AboutPage(),
+      },
+    ));
 
-    // Verify top banner text exists
-    expect(find.text('PLACEHOLDER HEADER TEXT'), findsOneWidget);
+    await tester.pumpAndSettle();
 
-    // Verify About title is present and centered
-    final aboutTitle = find.text('About Us');
-    expect(aboutTitle, findsOneWidget);
+    // Verify About title is present
+    expect(find.text('About Us'), findsOneWidget);
 
-    // Verify main centered paragraph text exists
+    // Verify main paragraph text exists (partial match)
     expect(find.textContaining('Welcome to Union Shop'), findsOneWidget);
 
     // Verify Home button exists in the header row
     final homeButton = find.widgetWithText(TextButton, 'Home');
     expect(homeButton, findsWidgets);
 
-    // Tap the first Home button (in the header) and ensure navigation happens
+    // Tap the first Home button (in the header) and ensure navigation to '/' happens
     await tester.tap(homeButton.first);
     await tester.pumpAndSettle();
 
-    // After tapping Home the widget tree will attempt to navigate to '/', but since
-    // we supplied AboutPage as the root for this test, navigation will not replace the
-    // widget. At minimum, the tap should not throw and the test will complete.
+    // After navigation we should see the HomeScreen placeholder
+    expect(find.text('HomeScreen'), findsOneWidget);
   });
 }

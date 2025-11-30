@@ -48,10 +48,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const SizedBox.shrink(),
-        actions: const [],
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

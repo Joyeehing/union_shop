@@ -49,26 +49,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const AboutPage()),
-              );
-            },
-            child: const Text(
-              'About',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          // or an IconButton
-          // IconButton(
-          //   icon: Icon(Icons.info_outline),
-          //   onPressed: () => Navigator.of(context).pushNamed('/about'),
-          //   tooltip: 'About',
-          // ),
-        ],
+          title: const SizedBox.shrink(),
+        actions: const [],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -123,6 +105,23 @@ class HomeScreen extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pushNamed('/about'),
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                                    minimumSize: Size.zero,
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                  ),
+                                  child: const Text(
+                                    'About',
+                                    style: TextStyle(
+                                      color: Color(0xFF333333),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 8),
                                 IconButton(
                                   icon: const Icon(
                                     Icons.search,
@@ -371,6 +370,23 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Column(
+            const SizedBox(width: 12),
+            TextButton(
+              onPressed: () => navigateToHome(context),
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+                minimumSize: const Size(40, 24),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              child: const Text(
+                'Home',
+              style: TextStyle(
+                color: Color(0xFF333333),
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),                      
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 4),

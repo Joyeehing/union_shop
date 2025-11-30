@@ -7,7 +7,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About Us'),
+        title: const Text('About'),
         backgroundColor: const Color(0xFF4d2963),
       ),
       body: const Padding(
@@ -18,7 +18,7 @@ class AboutPage extends StatelessWidget {
             children: [
               SizedBox(height: 8),
               Text(
-                'About Union Shop',
+                'About Us',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 12),

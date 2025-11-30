@@ -99,6 +99,23 @@ class HomeScreen extends StatelessWidget {
                               },
                             ),
                           ),
+                          const SizedBox(width: 12),
+                          TextButton(
+                            onPressed: () => navigateToHome(context),
+                            style: TextButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              minimumSize: const Size(40, 24),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                            child: const Text(
+                              'Home',
+                              style: TextStyle(
+                                color: Color(0xFF333333),
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
                           const Spacer(),
                           ConstrainedBox(
                             constraints: const BoxConstraints(maxWidth: 600),
@@ -369,24 +386,7 @@ class ProductCard extends StatelessWidget {
               },
             ),
           ),
-          Column(
-            const SizedBox(width: 12),
-            TextButton(
-              onPressed: () => navigateToHome(context),
-              style: TextButton.styleFrom(
-                padding: EdgeInsets.zero,
-                minimumSize: const Size(40, 24),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              ),
-              child: const Text(
-                'Home',
-              style: TextStyle(
-                color: Color(0xFF333333),
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),                      
+          Column(                     
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 4),

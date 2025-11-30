@@ -39,7 +39,7 @@ class AboutPage extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Text(
-              'Welcome to Union Shop. We provide quality merchandise and support our student community. Replace this placeholder text with your organisation\'s real About Us content.',
+              'Welcome to Union Shop. \nWe’re dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive personalisation service!\n\nAll online purchases are available for delivery or instore collection!\nWe hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don’t hesitate to contact us at hello@upsu.net.\nHappy shopping!',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),

@@ -14,6 +14,19 @@ class AboutPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
           tooltip: 'Back',
         ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/',
+              (route) => false,
+            ),
+            child: const Text(
+              'Home',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
+import 'about_us_page.dart'; // added import
 
 void main() {
   runApp(const UnionShopApp());
@@ -21,7 +22,11 @@ class UnionShopApp extends StatelessWidget {
       initialRoute: '/',
       // When navigating to '/product', build and return the ProductPage
       // In your browser, try this link: http://localhost:49856/#/product
-      routes: {'/product': (context) => const ProductPage()},
+      routes: {
+        '/': (context) => const HomeScreen(), // ...existing route
+        '/about': (context) => const AboutUsPage(), // added route
+        '/product': (context) => const ProductPage()
+      },
     );
   }
 }
@@ -302,6 +307,22 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            // ...existing drawer items...
+            ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context); // close drawer
+                Navigator.pushNamed(context, '/about');
+              },
+            ),
+            // ...existing drawer items...
           ],
         ),
       ),

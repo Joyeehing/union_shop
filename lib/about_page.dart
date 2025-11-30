@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets/footer.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
@@ -179,6 +180,9 @@ class AboutPage extends StatelessWidget {
                 ],
               ),
             ),
+
+            // Footer
+            const Footer(),
           ],
         ),
       ),

@@ -163,7 +163,7 @@ class AboutPage extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 8),
                   Text(
@@ -176,10 +176,6 @@ class AboutPage extends StatelessWidget {
                     style: TextStyle(fontSize: 16),
                   ),
                   SizedBox(height: 16),
-                  Text(
-                    'Contact: contact@example.com',
-                    style: TextStyle(fontSize: 14),
-                  ),
                 ],
               ),
             ),

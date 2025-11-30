@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({Key? key}) : super(key: key);
+  const AboutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class AboutPage extends StatelessWidget {
             ),
             SizedBox(height: 12),
             Text(
-              'Welcome to Union Shop. We provide ...', // replace with your content
+              'Welcome to Union Shop. We provide quality merchandise and support our student community. Replace this placeholder text with your organisation\'s real About Us content.',
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),
@@ -40,3 +40,5 @@ class AboutPage extends StatelessWidget {
     );
   }
 }
+
+

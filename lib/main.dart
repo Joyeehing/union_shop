@@ -48,6 +48,24 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pushNamed('/about'),
+            child: const Text(
+              'About',
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          // or an IconButton
+          // IconButton(
+          //   icon: Icon(Icons.info_outline),
+          //   onPressed: () => Navigator.of(context).pushNamed('/about'),
+          //   tooltip: 'About',
+          // ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -16,8 +16,6 @@ class Footer extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildShopColumn(),
-                const SizedBox(height: 20),
                 _buildHelpColumn(),
                 const SizedBox(height: 20),
                 _buildAboutColumn(context),
@@ -30,8 +28,6 @@ class Footer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(flex: 2, child: _buildShopColumn()),
-                const SizedBox(width: 40),
                 Expanded(flex: 2, child: _buildHelpColumn()),
                 const SizedBox(width: 40),
                 Expanded(flex: 1, child: _buildAboutColumn(context)),

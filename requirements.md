@@ -47,9 +47,9 @@ User stories
 - As a user, I want to navigate back after viewing the page.
 
 Acceptance criteria
-- [ ] About page accessible via navbar or footer link.
-- [ ] Page contains heading, at least two paragraphs of text.
-- [ ] Back navigation returns to the previous route.
+- [x] About page accessible via navbar or footer link.
+- [x] Page contains heading, at least two paragraphs of text.
+- [x] Back navigation returns to the previous route as click any button at the Navbar or footer.
 
 ---
 

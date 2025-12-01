@@ -41,7 +41,7 @@ class Footer extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           const Text(
-            'Union Shop — 123 University St, City, ZIP',
+            'Union Shop — Cambridge Rd,Portsmouth, PO1 2EF',
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey, fontSize: 14),
           ),

@@ -48,7 +48,7 @@ User stories
 
 Acceptance criteria
 - [ ] About page accessible via navbar or footer link.
-- [ ] Page contains heading, at least two paragraphs of text and one image or placeholder.
+- [ ] Page contains heading, at least two paragraphs of text.
 - [ ] Back navigation returns to the previous route.
 
 ---

@@ -8,7 +8,7 @@ class Footer extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Colors.grey[50],
-      padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
       child: LayoutBuilder(
         builder: (context, constraints) {
           // Responsive: single column on mobile, row on desktop
@@ -17,23 +17,26 @@ class Footer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildShopColumn(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 _buildHelpColumn(),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 _buildAboutColumn(context),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 _buildLatestOffersColumn(),
               ],
             );
           } else {
             return Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(child: _buildShopColumn()),
-                Expanded(child: _buildHelpColumn()),
-                Expanded(child: _buildAboutColumn(context)),
-                Expanded(child: _buildLatestOffersColumn()),
+                Expanded(flex: 2, child: _buildShopColumn()),
+                const SizedBox(width: 40),
+                Expanded(flex: 2, child: _buildHelpColumn()),
+                const SizedBox(width: 40),
+                Expanded(flex: 1, child: _buildAboutColumn(context)),
+                const SizedBox(width: 40),
+                Expanded(flex: 3, child: _buildLatestOffersColumn()),
               ],
             );
           }
@@ -42,28 +45,7 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildShopColumn() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'SHOP',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF333333),
-            letterSpacing: 1.2,
-          ),
-        ),
-        const SizedBox(height: 12),
-        _buildFooterLink('Clothing', () {}),
-        _buildFooterLink('Merchandise', () {}),
-        _buildFooterLink('Signature & Essential Range', () {}),
-        _buildFooterLink('Portsmouth City Collection', () {}),
-        _buildFooterLink('Graduation', () {}),
-      ],
-    );
-  }
+ 
 
   Widget _buildHelpColumn() {
     return Column(
@@ -123,6 +105,7 @@ class Footer extends StatelessWidget {
         Row(
           children: [
             Expanded(
+              flex: 3,
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Email Address',
@@ -151,7 +134,6 @@ class Footer extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(width: 8),
             ElevatedButton(
               onPressed: () {
                 // Subscribe action placeholder
@@ -160,17 +142,18 @@ class Footer extends StatelessWidget {
                 backgroundColor: const Color(0xFF4d2963),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 12,
+                  horizontal: 16,
+                  vertical: 14,
                 ),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
                 ),
+                elevation: 0,
               ),
               child: const Text(
                 'SUBSCRIBE',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.5,
                 ),
@@ -184,7 +167,7 @@ class Footer extends StatelessWidget {
 
   Widget _buildFooterLink(String text, VoidCallback onTap) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 3),
       child: InkWell(
         onTap: onTap,
         child: Text(
@@ -192,7 +175,7 @@ class Footer extends StatelessWidget {
           style: const TextStyle(
             fontSize: 14,
             color: Color(0xFF666666),
-            height: 1.5,
+            height: 1.4,
           ),
         ),
       ),

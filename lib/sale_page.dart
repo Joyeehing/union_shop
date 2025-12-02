@@ -74,14 +74,28 @@ class _SalePageState extends State<SalePage> {
             // Page Title
             Container(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 80),
-              child: const Text(
-                'SALE',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF333333),
-                  letterSpacing: 2,
-                ),
+              child: const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    'SALE',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF333333),
+                      letterSpacing: 2,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Don\'t miss out! Get yours before they\'re all gone!\n\nAll prices shown are inclusive of the discount 🛒',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF666666),
+                      height: 1.5,
+                    ),
+                  ),
+                ],
               ),
             ),
 

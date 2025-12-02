@@ -14,7 +14,7 @@ class _SalePageState extends State<SalePage> {
   String _selectedFilter = 'All';
   String _selectedSort = 'Featured';
   int _currentPage = 1;
-  final int _itemsPerPage = 6;
+  final int _itemsPerPage = 8;
 
   List<SaleItem> get filteredAndSortedItems {
     List<SaleItem> items = List.from(saleItems);
@@ -563,5 +563,19 @@ final List<SaleItem> saleItems = [
     originalPrice: 15.00,
     salePrice: 10.99,
     description: 'Warm knitted beanie with university logo',
+  ),
+  SaleItem(
+    id: '13',
+    name: 'Tote Bag',
+    originalPrice: 22.00,
+    salePrice: 14.99,
+    description: 'Eco-friendly canvas tote bag with print',
+  ),
+  SaleItem(
+    id: '14',
+    name: 'Sports Socks Pack',
+    originalPrice: 16.00,
+    salePrice: 10.99,
+    description: 'Pack of 3 comfortable sports socks',
   ),
 ];

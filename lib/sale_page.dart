@@ -519,7 +519,7 @@ final List<SaleItem> saleItems = [
     id: '6',
     name: 'Varsity Jacket',
     originalPrice: 65.00,
-    salePrice: 45.99,
+    salePrice: 45.00,
     description: 'Classic varsity jacket with embroidered logo',
   ),
   SaleItem(
@@ -568,14 +568,14 @@ final List<SaleItem> saleItems = [
     id: '13',
     name: 'Tote Bag',
     originalPrice: 22.00,
-    salePrice: 14.99,
+    salePrice: 14.50,
     description: 'Eco-friendly canvas tote bag with print',
   ),
   SaleItem(
     id: '14',
     name: 'Sports Socks Pack',
     originalPrice: 16.00,
-    salePrice: 10.99,
+    salePrice: 11.00,
     description: 'Pack of 3 comfortable sports socks',
   ),
 ];

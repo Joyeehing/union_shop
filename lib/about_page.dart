@@ -7,37 +7,107 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return const Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
             // Header (same as HomeScreen)
-            Header(activePage: 'about'),
+            const Header(activePage: 'about'),
 
             // About content
-            Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 8),
-                  Text(
-                    'About Us',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    'Welcome to Union Shop. \n\nWe’re dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive personalisation service!\n\nAll online purchases are available for delivery or instore collection!\n\nWe hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don’t hesitate to contact us at hello@upsu.net.\n\nHappy shopping!',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 16),
-                ],
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 60),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Center(
+                      child: Text(
+                        'About us',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF4A4A4A),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 40),
+                    const Text(
+                      'Welcome to the Union Shop!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF666666),
+                        height: 1.8,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF666666),
+                          height: 1.8,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'We\'re dedicated to giving you the very best University branded products, with a range of clothing and merchandise available to shop all year round! We even offer an exclusive ',
+                          ),
+                          TextSpan(
+                            text: 'personalisation service',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                          TextSpan(text: '!'),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'All online purchases are available for delivery or instore collection!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF666666),
+                        height: 1.8,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'We hope you enjoy our products as much as we enjoy offering them to you. If you have any questions or comments, please don\'t hesitate to contact us at hello@upsu.net.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF666666),
+                        height: 1.8,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Happy shopping!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF666666),
+                        height: 1.8,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'The Union Shop & Reception Team',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF666666),
+                        height: 1.8,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
             // Footer
-            Footer(),
+            const Footer(),
           ],
         ),
       ),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class Header extends StatelessWidget {
+class Header extends StatefulWidget {
   final String activePage; // 'home', 'about', etc.
 
   const Header({super.key, this.activePage = ''});
 
+  @override
+  State<Header> createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
   void _navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
@@ -20,8 +25,6 @@ class Header extends StatelessWidget {
   void _navigateToAbout(BuildContext context) {
     Navigator.pushNamed(context, '/about');
   }
-
- 
 
   void _placeholderCallback() {}
 
@@ -94,13 +97,121 @@ class Header extends StatelessWidget {
                               color: const Color(0xFF333333),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              decoration: activePage == 'home'
+                              decoration: widget.activePage == 'home'
                                   ? TextDecoration.underline
                                   : TextDecoration.none,
                             ),
                           ),
                         ),
-                         const SizedBox(width: 12),
+                        const SizedBox(width: 12),
+                        // Shop dropdown
+                        PopupMenuButton<String>(
+                          offset: const Offset(0, 40),
+                          onSelected: (value) {
+                            // Placeholder for future navigation
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('$value - Coming soon!')),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'Shop',
+                                  style: TextStyle(
+                                    color: const Color(0xFF333333),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: widget.activePage == 'shop'
+                                        ? TextDecoration.underline
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                const Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 20,
+                                  color: Color(0xFF333333),
+                                ),
+                              ],
+                            ),
+                          ),
+                          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'Clothing',
+                              child: Text('Clothing'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Merchandise',
+                              child: Text('Merchandise'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Signature & Essential Range',
+                              child: Text('Signature & Essential Range'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Portsmouth City Collection',
+                              child: Text('Portsmouth City Collection'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Pride Collection🏳️‍🌈',
+                              child: Text('Pride Collection🏳️‍🌈'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Graduation🎓',
+                              child: Text('Graduation🎓'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 12),
+                        // The Print Shack dropdown
+                        PopupMenuButton<String>(
+                          offset: const Offset(0, 40),
+                          onSelected: (value) {
+                            // Placeholder for future navigation
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('$value - Coming soon!')),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  'The Print Shack',
+                                  style: TextStyle(
+                                    color: const Color(0xFF333333),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    decoration: widget.activePage == 'printshack'
+                                        ? TextDecoration.underline
+                                        : TextDecoration.none,
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                const Icon(
+                                  Icons.arrow_drop_down,
+                                  size: 20,
+                                  color: Color(0xFF333333),
+                                ),
+                              ],
+                            ),
+                          ),
+                          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                            const PopupMenuItem<String>(
+                              value: 'About',
+                              child: Text('About'),
+                            ),
+                            const PopupMenuItem<String>(
+                              value: 'Personalisation',
+                              child: Text('Personalisation'),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 12),
                         TextButton(
                           onPressed: () => _navigateToSale(context),
                           style: TextButton.styleFrom(
@@ -114,7 +225,7 @@ class Header extends StatelessWidget {
                               color: const Color(0xFF333333),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              decoration: activePage == 'sale'
+                              decoration: widget.activePage == 'sale'
                                   ? TextDecoration.underline
                                   : TextDecoration.none,
                             ),
@@ -122,7 +233,7 @@ class Header extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         TextButton(
-                          onPressed: activePage == 'about'
+                          onPressed: widget.activePage == 'about'
                               ? null
                               : () => _navigateToAbout(context),
                           style: TextButton.styleFrom(
@@ -136,7 +247,7 @@ class Header extends StatelessWidget {
                               color: const Color(0xFF333333),
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              decoration: activePage == 'about'
+                              decoration: widget.activePage == 'about'
                                   ? TextDecoration.underline
                                   : TextDecoration.none,
                             ),

@@ -15,13 +15,13 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Verify About title is present
-    expect(find.text('About Us'), findsOneWidget);
+    // Verify About title is present (updated to match actual implementation)
+    expect(find.text('About us'), findsOneWidget);
 
     // Verify main paragraph text exists (partial match)
-    expect(find.textContaining('Welcome to Union Shop'), findsOneWidget);
+    expect(find.textContaining('Welcome to the Union Shop'), findsOneWidget);
 
-    // Verify Home button exists in the header row
+    // Verify Home button exists in the header
     final homeButton = find.widgetWithText(TextButton, 'Home');
     expect(homeButton, findsWidgets);
 

@@ -3,8 +3,64 @@ import 'widgets/header.dart';
 import 'widgets/footer.dart';
 import 'sale_detail_page.dart';
 
-class SalePage extends StatelessWidget {
+class SalePage extends StatefulWidget {
   const SalePage({super.key});
+
+  @override
+  State<SalePage> createState() => _SalePageState();
+}
+
+class _SalePageState extends State<SalePage> {
+  String _selectedFilter = 'All';
+  String _selectedSort = 'Featured';
+
+  List<SaleItem> get filteredAndSortedItems {
+    List<SaleItem> items = List.from(saleItems);
+
+    // Apply filter
+    if (_selectedFilter != 'All') {
+      items = items.where((item) {
+        switch (_selectedFilter) {
+          case 'Under £15':
+            return item.salePrice < 15;
+          case '£15 - £30':
+            return item.salePrice >= 15 && item.salePrice <= 30;
+          case 'Over £30':
+            return item.salePrice > 30;
+          case '20% Off or More':
+            return item.discountPercentage >= 20;
+          case '30% Off or More':
+            return item.discountPercentage >= 30;
+          default:
+            return true;
+        }
+      }).toList();
+    }
+
+    // Apply sort
+    switch (_selectedSort) {
+      case 'Price: Low to High':
+        items.sort((a, b) => a.salePrice.compareTo(b.salePrice));
+        break;
+      case 'Price: High to Low':
+        items.sort((a, b) => b.salePrice.compareTo(a.salePrice));
+        break;
+      case 'Discount: High to Low':
+        items.sort((a, b) => b.discountPercentage.compareTo(a.discountPercentage));
+        break;
+      case 'Name: A to Z':
+        items.sort((a, b) => a.name.compareTo(b.name));
+        break;
+      case 'Name: Z to A':
+        items.sort((a, b) => b.name.compareTo(a.name));
+        break;
+      default:
+        // Featured - keep original order
+        break;
+    }
+
+    return items;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +85,52 @@ class SalePage extends StatelessWidget {
               ),
             ),
 
+            // Filter and Sort Controls
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 80),
+              child: Row(
+                children: [
+                  _buildFilterDropdown(),
+                  const SizedBox(width: 16),
+                  _buildSortDropdown(),
+                  const Spacer(),
+                  Text(
+                    '${filteredAndSortedItems.length} Products',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF666666),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
             // Sale Items Grid
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   int crossAxisCount = constraints.maxWidth > 900 ? 4 : 2;
+                  
+                  final items = filteredAndSortedItems;
+                  
+                  if (items.isEmpty) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(40),
+                        child: Text(
+                          'No items match your filters',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF666666),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                   
                   return GridView.builder(
                     shrinkWrap: true,
@@ -45,9 +141,9 @@ class SalePage extends StatelessWidget {
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 20,
                     ),
-                    itemCount: saleItems.length,
+                    itemCount: items.length,
                     itemBuilder: (context, index) {
-                      final item = saleItems[index];
+                      final item = items[index];
                       return _buildSaleItem(context, item);
                     },
                   );
@@ -60,6 +156,104 @@ class SalePage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildFilterDropdown() {
+    return Row(
+      children: [
+        const Text(
+          'Filter By:',
+          style: TextStyle(
+            fontSize: 14,
+            color: Color(0xFF333333),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[400]!),
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.white,
+          ),
+          child: DropdownButton<String>(
+            value: _selectedFilter,
+            underline: const SizedBox(),
+            icon: const Icon(Icons.arrow_drop_down, size: 20),
+            isExpanded: false,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF333333),
+            ),
+            items: const [
+              DropdownMenuItem(value: 'All', child: Text('All')),
+              DropdownMenuItem(value: 'Under £15', child: Text('Under £15')),
+              DropdownMenuItem(value: '£15 - £30', child: Text('£15 - £30')),
+              DropdownMenuItem(value: 'Over £30', child: Text('Over £30')),
+              DropdownMenuItem(value: '20% Off or More', child: Text('20% Off or More')),
+              DropdownMenuItem(value: '30% Off or More', child: Text('30% Off or More')),
+            ],
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  _selectedFilter = newValue;
+                });
+              }
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSortDropdown() {
+    return Row(
+      children: [
+        const Text(
+          'Sort By:',
+          style: TextStyle(
+            fontSize: 14,
+            color: Color(0xFF333333),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey[400]!),
+            borderRadius: BorderRadius.circular(4),
+            color: Colors.white,
+          ),
+          child: DropdownButton<String>(
+            value: _selectedSort,
+            underline: const SizedBox(),
+            icon: const Icon(Icons.arrow_drop_down, size: 20),
+            isExpanded: false,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF333333),
+            ),
+            items: const [
+              DropdownMenuItem(value: 'Featured', child: Text('Featured')),
+              DropdownMenuItem(value: 'Price: Low to High', child: Text('Price: Low to High')),
+              DropdownMenuItem(value: 'Price: High to Low', child: Text('Price: High to Low')),
+              DropdownMenuItem(value: 'Discount: High to Low', child: Text('Discount: High to Low')),
+              DropdownMenuItem(value: 'Name: A to Z', child: Text('Name: A to Z')),
+              DropdownMenuItem(value: 'Name: Z to A', child: Text('Name: Z to A')),
+            ],
+            onChanged: (String? newValue) {
+              if (newValue != null) {
+                setState(() {
+                  _selectedSort = newValue;
+                });
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 

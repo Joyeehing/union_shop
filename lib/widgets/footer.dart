@@ -16,9 +16,9 @@ class Footer extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHelpColumn(),
-                const SizedBox(height: 20),
                 _buildAboutColumn(context),
+                const SizedBox(height: 20),
+                _buildHelpColumn(),
                 const SizedBox(height: 20),
                 _buildLatestOffersColumn(),
               ],
@@ -28,9 +28,9 @@ class Footer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(flex: 2, child: _buildHelpColumn()),
-                const SizedBox(width: 40),
                 Expanded(flex: 1, child: _buildAboutColumn(context)),
+                const SizedBox(width: 40),
+                Expanded(flex: 2, child: _buildHelpColumn()),
                 const SizedBox(width: 40),
                 Expanded(flex: 3, child: _buildLatestOffersColumn()),
               ],
@@ -80,6 +80,43 @@ class Footer extends StatelessWidget {
         _buildFooterLink('About Us', () {
           Navigator.pushNamed(context, '/about');
         }),
+        const SizedBox(height: 16),
+        const Text(
+          'OPENING HOURS',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF333333),
+            letterSpacing: 1.2,
+          ),
+        ),
+        const SizedBox(height: 12),
+        const Text(
+          '(Term Time)\n\nMonday - Friday 10am - 4pm',
+          style: TextStyle(
+            fontSize: 14,
+            color: Color(0xFF666666),
+            height: 1.4,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          '(Outside of Term Time / Consolidation Weeks)\n\nMonday - Friday 10am - 3pm',
+          style: TextStyle(
+            fontSize: 14,
+            color: Color(0xFF666666),
+            height: 1.4,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Purchase online 24/7',
+          style: TextStyle(
+            fontSize: 14,
+            color: Color(0xFF666666),
+            height: 1.4,
+          ),
+        ),
       ],
     );
   }

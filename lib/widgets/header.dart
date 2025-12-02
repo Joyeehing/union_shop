@@ -84,174 +84,56 @@ class _HeaderState extends State<Header> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TextButton(
+                        _HoverButton(
+                          label: 'Home',
+                          isActive: widget.activePage == 'home',
                           onPressed: () => _navigateToHome(context),
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            minimumSize: const Size(40, 24),
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: Text(
-                            'Home',
-                            style: TextStyle(
-                              color: const Color(0xFF333333),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              decoration: widget.activePage == 'home'
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
-                            ),
-                          ),
                         ),
                         const SizedBox(width: 12),
                         // Shop dropdown
-                        PopupMenuButton<String>(
-                          offset: const Offset(0, 40),
+                        _HoverDropdown(
+                          label: 'Shop',
+                          isActive: widget.activePage == 'shop',
+                          items: const [
+                            'Clothing',
+                            'Merchandise',
+                            'Signature & Essential Range',
+                            'Portsmouth City Collection',
+                            'Pride Collection🏳️‍🌈',
+                            'Graduation🎓',
+                          ],
                           onSelected: (value) {
-                            // Placeholder for future navigation
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('$value - Coming soon!')),
                             );
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'Shop',
-                                  style: TextStyle(
-                                    color: const Color(0xFF333333),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: widget.activePage == 'shop'
-                                        ? TextDecoration.underline
-                                        : TextDecoration.none,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 20,
-                                  color: Color(0xFF333333),
-                                ),
-                              ],
-                            ),
-                          ),
-                          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'Clothing',
-                              child: Text('Clothing'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Merchandise',
-                              child: Text('Merchandise'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Signature & Essential Range',
-                              child: Text('Signature & Essential Range'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Portsmouth City Collection',
-                              child: Text('Portsmouth City Collection'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Pride Collection🏳️‍🌈',
-                              child: Text('Pride Collection🏳️‍🌈'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Graduation🎓',
-                              child: Text('Graduation🎓'),
-                            ),
-                          ],
                         ),
                         const SizedBox(width: 12),
                         // The Print Shack dropdown
-                        PopupMenuButton<String>(
-                          offset: const Offset(0, 40),
+                        _HoverDropdown(
+                          label: 'The Print Shack',
+                          isActive: widget.activePage == 'printshack',
+                          items: const [
+                            'About',
+                            'Personalisation',
+                          ],
                           onSelected: (value) {
-                            // Placeholder for future navigation
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text('$value - Coming soon!')),
                             );
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  'The Print Shack',
-                                  style: TextStyle(
-                                    color: const Color(0xFF333333),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    decoration: widget.activePage == 'printshack'
-                                        ? TextDecoration.underline
-                                        : TextDecoration.none,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                const Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 20,
-                                  color: Color(0xFF333333),
-                                ),
-                              ],
-                            ),
-                          ),
-                          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                            const PopupMenuItem<String>(
-                              value: 'About',
-                              child: Text('About'),
-                            ),
-                            const PopupMenuItem<String>(
-                              value: 'Personalisation',
-                              child: Text('Personalisation'),
-                            ),
-                          ],
                         ),
                         const SizedBox(width: 12),
-                        TextButton(
+                        _HoverButton(
+                          label: 'SALE!',
+                          isActive: widget.activePage == 'sale',
                           onPressed: () => _navigateToSale(context),
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            minimumSize: Size.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: Text(
-                            'SALE!',
-                            style: TextStyle(
-                              color: const Color(0xFF333333),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              decoration: widget.activePage == 'sale'
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
-                            ),
-                          ),
                         ),
                         const SizedBox(width: 12),
-                        TextButton(
-                          onPressed: widget.activePage == 'about'
-                              ? null
-                              : () => _navigateToAbout(context),
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            minimumSize: Size.zero,
-                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          ),
-                          child: Text(
-                            'About',
-                            style: TextStyle(
-                              color: const Color(0xFF333333),
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              decoration: widget.activePage == 'about'
-                                  ? TextDecoration.underline
-                                  : TextDecoration.none,
-                            ),
-                          ),
+                        _HoverButton(
+                          label: 'About',
+                          isActive: widget.activePage == 'about',
+                          onPressed: widget.activePage == 'about' ? null : () => _navigateToAbout(context),
                         ),
                       ],
                     ),
@@ -322,6 +204,118 @@ class _HeaderState extends State<Header> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// Hover button widget for navigation items
+class _HoverButton extends StatefulWidget {
+  final String label;
+  final bool isActive;
+  final VoidCallback? onPressed;
+
+  const _HoverButton({
+    required this.label,
+    required this.isActive,
+    this.onPressed,
+  });
+
+  @override
+  State<_HoverButton> createState() => _HoverButtonState();
+}
+
+class _HoverButtonState extends State<_HoverButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: TextButton(
+        onPressed: widget.onPressed,
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: Text(
+          widget.label,
+          style: TextStyle(
+            color: const Color(0xFF333333),
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            decoration: widget.isActive || _isHovered
+                ? TextDecoration.underline
+                : TextDecoration.none,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Hover dropdown widget for navigation items with submenus
+class _HoverDropdown extends StatefulWidget {
+  final String label;
+  final bool isActive;
+  final List<String> items;
+  final Function(String) onSelected;
+
+  const _HoverDropdown({
+    required this.label,
+    required this.isActive,
+    required this.items,
+    required this.onSelected,
+  });
+
+  @override
+  State<_HoverDropdown> createState() => _HoverDropdownState();
+}
+
+class _HoverDropdownState extends State<_HoverDropdown> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: PopupMenuButton<String>(
+        offset: const Offset(0, 40),
+        onSelected: widget.onSelected,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                widget.label,
+                style: TextStyle(
+                  color: const Color(0xFF333333),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  decoration: widget.isActive || _isHovered
+                      ? TextDecoration.underline
+                      : TextDecoration.none,
+                ),
+              ),
+              const SizedBox(width: 4),
+              const Icon(
+                Icons.arrow_drop_down,
+                size: 20,
+                color: Color(0xFF333333),
+              ),
+            ],
+          ),
+        ),
+        itemBuilder: (BuildContext context) => widget.items
+            .map((item) => PopupMenuItem<String>(
+                  value: item,
+                  child: Text(item),
+                ))
+            .toList(),
       ),
     );
   }

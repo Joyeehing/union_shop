@@ -9,8 +9,12 @@ class Header extends StatelessWidget {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
- void _navigateToSale(BuildContext context) {
-    Navigator.pushNamed(context, '/sale');
+  void _navigateToSale(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      '/sale',
+      (route) => route.settings.name == '/',
+    );
   }
 
   void _navigateToAbout(BuildContext context) {
@@ -98,9 +102,7 @@ class Header extends StatelessWidget {
                         ),
                          const SizedBox(width: 12),
                         TextButton(
-                          onPressed: activePage == 'sale'
-                              ? null
-                              : () => _navigateToSale(context),
+                          onPressed: () => _navigateToSale(context),
                           style: TextButton.styleFrom(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             minimumSize: Size.zero,

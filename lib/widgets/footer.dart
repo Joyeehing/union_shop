@@ -100,35 +100,33 @@ class Footer extends StatelessWidget {
         const SizedBox(height: 12),
         Row(
           children: [
-            Expanded(
-              flex: 2,
-              child: SizedBox(
-                height: 40,
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Email Address',
-                    hintStyle: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF999999),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 10,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: const OutlineInputBorder(
-                      borderRadius: BorderRadius.zero,
-                      borderSide: BorderSide(color: Color(0xFF4d2963)),
-                    ),
+            SizedBox(
+              width: 350,
+              height: 40,
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Email Address',
+                  hintStyle: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF999999),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 10,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.zero,
+                    borderSide: BorderSide(color: Color(0xFF4d2963)),
                   ),
                 ),
               ),

@@ -3,10 +3,31 @@ import 'widgets/header.dart';
 import 'widgets/footer.dart';
 import 'sale_page.dart';
 
-class SaleDetailPage extends StatelessWidget {
+class SaleDetailPage extends StatefulWidget {
   final SaleItem item;
 
   const SaleDetailPage({super.key, required this.item});
+
+  @override
+  State<SaleDetailPage> createState() => _SaleDetailPageState();
+}
+
+class _SaleDetailPageState extends State<SaleDetailPage> {
+  int _quantity = 1;
+
+  void _incrementQuantity() {
+    setState(() {
+      _quantity++;
+    });
+  }
+
+  void _decrementQuantity() {
+    if (_quantity > 1) {
+      setState(() {
+        _quantity--;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +90,9 @@ class SaleDetailPage extends StatelessWidget {
         border: Border.all(color: Colors.grey[300]!),
         color: Colors.grey[200],
       ),
-      child: item.imageUrl != null
+      child: widget.item.imageUrl != null
           ? Image.network(
-              item.imageUrl!,
+              widget.item.imageUrl!,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return const Center(
@@ -91,7 +112,7 @@ class SaleDetailPage extends StatelessWidget {
       children: [
         // Product name
         Text(
-          item.name,
+          widget.item.name,
           style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
@@ -108,7 +129,7 @@ class SaleDetailPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
-            'SAVE ${item.discountPercentage}%',
+            'SAVE ${widget.item.discountPercentage}%',
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -122,7 +143,7 @@ class SaleDetailPage extends StatelessWidget {
         Row(
           children: [
             Text(
-              '£${item.salePrice.toStringAsFixed(2)}',
+              '£${widget.item.salePrice.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.bold,
@@ -131,7 +152,7 @@ class SaleDetailPage extends StatelessWidget {
             ),
             const SizedBox(width: 16),
             Text(
-              '£${item.originalPrice.toStringAsFixed(2)}',
+              '£${widget.item.originalPrice.toStringAsFixed(2)}',
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.grey[600],
@@ -153,8 +174,8 @@ class SaleDetailPage extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         Text(
-          item.description.isNotEmpty 
-              ? item.description 
+          widget.item.description.isNotEmpty 
+              ? widget.item.description 
               : 'High quality product on sale. Limited time offer!',
           style: const TextStyle(
             fontSize: 16,
@@ -164,6 +185,65 @@ class SaleDetailPage extends StatelessWidget {
         ),
         const SizedBox(height: 40),
         
+        // Quantity selector
+        Row(
+          children: [
+            const Text(
+              'Quantity:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF333333),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300]!),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove),
+                    onPressed: _decrementQuantity,
+                    iconSize: 20,
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    constraints: const BoxConstraints(minWidth: 40),
+                    child: Text(
+                      '$_quantity',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF333333),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: _incrementQuantity,
+                    iconSize: 20,
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(
+                      minWidth: 36,
+                      minHeight: 36,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 24),
+        
         // Add to cart button
         SizedBox(
           width: double.infinity,
@@ -171,7 +251,7 @@ class SaleDetailPage extends StatelessWidget {
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('${item.name} added to cart!'),
+                  content: Text('$_quantity x ${widget.item.name} added to cart!'),
                   duration: const Duration(seconds: 2),
                 ),
               );

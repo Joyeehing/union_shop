@@ -13,6 +13,8 @@ class SalePage extends StatefulWidget {
 class _SalePageState extends State<SalePage> {
   String _selectedFilter = 'All';
   String _selectedSort = 'Featured';
+  int _currentPage = 1;
+  final int _itemsPerPage = 6;
 
   List<SaleItem> get filteredAndSortedItems {
     List<SaleItem> items = List.from(saleItems);
@@ -60,6 +62,39 @@ class _SalePageState extends State<SalePage> {
     }
 
     return items;
+  }
+
+  List<SaleItem> get paginatedItems {
+    final items = filteredAndSortedItems;
+    final startIndex = (_currentPage - 1) * _itemsPerPage;
+    final endIndex = startIndex + _itemsPerPage;
+    
+    if (startIndex >= items.length) return [];
+    return items.sublist(
+      startIndex,
+      endIndex > items.length ? items.length : endIndex,
+    );
+  }
+
+  int get totalPages {
+    final totalItems = filteredAndSortedItems.length;
+    return (totalItems / _itemsPerPage).ceil();
+  }
+
+  void _goToNextPage() {
+    if (_currentPage < totalPages) {
+      setState(() {
+        _currentPage++;
+      });
+    }
+  }
+
+  void _goToPreviousPage() {
+    if (_currentPage > 1) {
+      setState(() {
+        _currentPage--;
+      });
+    }
   }
 
   @override
@@ -129,9 +164,9 @@ class _SalePageState extends State<SalePage> {
                 builder: (context, constraints) {
                   int crossAxisCount = constraints.maxWidth > 900 ? 4 : 2;
                   
-                  final items = filteredAndSortedItems;
+                  final items = paginatedItems;
                   
-                  if (items.isEmpty) {
+                  if (filteredAndSortedItems.isEmpty) {
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.all(40),
@@ -164,6 +199,58 @@ class _SalePageState extends State<SalePage> {
                 },
               ),
             ),
+
+            // Pagination
+            if (totalPages > 1)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Previous button
+                    IconButton(
+                      icon: const Icon(Icons.chevron_left),
+                      onPressed: _currentPage > 1 ? _goToPreviousPage : null,
+                      style: IconButton.styleFrom(
+                        backgroundColor: _currentPage > 1
+                            ? const Color(0xFF4d2963)
+                            : Colors.grey[300],
+                        foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    // Page indicator
+                    Text(
+                      'Page $_currentPage of $totalPages',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Color(0xFF333333),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    // Next button
+                    IconButton(
+                      icon: const Icon(Icons.chevron_right),
+                      onPressed: _currentPage < totalPages ? _goToNextPage : null,
+                      style: IconButton.styleFrom(
+                        backgroundColor: _currentPage < totalPages
+                            ? const Color(0xFF4d2963)
+                            : Colors.grey[300],
+                        foregroundColor: Colors.white,
+                        disabledBackgroundColor: Colors.grey[300],
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
             const SizedBox(height: 40),
             const Footer(),
@@ -213,6 +300,7 @@ class _SalePageState extends State<SalePage> {
               if (newValue != null) {
                 setState(() {
                   _selectedFilter = newValue;
+                  _currentPage = 1; // Reset to page 1 when filter changes
                 });
               }
             },
@@ -262,6 +350,7 @@ class _SalePageState extends State<SalePage> {
               if (newValue != null) {
                 setState(() {
                   _selectedSort = newValue;
+                  _currentPage = 1; // Reset to page 1 when sort changes
                 });
               }
             },
@@ -446,5 +535,33 @@ final List<SaleItem> saleItems = [
     originalPrice: 20.00,
     salePrice: 13.99,
     description: 'Adjustable baseball cap with university branding',
+  ),
+  SaleItem(
+    id: '9',
+    name: 'Sweatpants',
+    originalPrice: 30.00,
+    salePrice: 19.99,
+    description: 'Comfortable sweatpants for casual wear',
+  ),
+  SaleItem(
+    id: '10',
+    name: 'Gym Bag',
+    originalPrice: 40.00,
+    salePrice: 27.99,
+    description: 'Durable gym bag with multiple compartments',
+  ),
+  SaleItem(
+    id: '11',
+    name: 'Zip-Up Hoodie',
+    originalPrice: 38.00,
+    salePrice: 25.99,
+    description: 'Zip-up hoodie with front pockets',
+  ),
+  SaleItem(
+    id: '12',
+    name: 'Beanie Hat',
+    originalPrice: 15.00,
+    salePrice: 10.99,
+    description: 'Warm knitted beanie with university logo',
   ),
 ];

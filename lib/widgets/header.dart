@@ -13,6 +13,10 @@ class Header extends StatelessWidget {
     Navigator.pushNamed(context, '/about');
   }
 
+  void _navigateToSale(BuildContext context) {
+    Navigator.pushNamed(context, '/sale');
+  }
+
   void _placeholderCallback() {}
 
   @override
@@ -107,6 +111,28 @@ class Header extends StatelessWidget {
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
                               decoration: activePage == 'about'
+                                  ? TextDecoration.underline
+                                  : TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        TextButton(
+                          onPressed: activePage == 'sale'
+                              ? null
+                              : () => _navigateToSale(context),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            minimumSize: Size.zero,
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
+                          child: Text(
+                            'Sale',
+                            style: TextStyle(
+                              color: const Color(0xFF333333),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              decoration: activePage == 'sale'
                                   ? TextDecoration.underline
                                   : TextDecoration.none,
                             ),

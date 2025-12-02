@@ -81,61 +81,69 @@ class _HeaderState extends State<Header> {
                   const SizedBox(width: 12),
                   // Center navigation (Home and About) - desktop view
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _HoverButton(
-                          label: 'Home',
-                          isActive: widget.activePage == 'home',
-                          onPressed: () => _navigateToHome(context),
+                    child: Center(
+                      child: ClipRect(
+                        child: OverflowBox(
+                          maxWidth: double.infinity,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _HoverButton(
+                                label: 'Home',
+                                isActive: widget.activePage == 'home',
+                                onPressed: () => _navigateToHome(context),
+                              ),
+                              const SizedBox(width: 12),
+                              // Shop dropdown
+                              _HoverDropdown(
+                                label: 'Shop',
+                                isActive: widget.activePage == 'shop',
+                                items: const [
+                                  'Clothing',
+                                  'Merchandise',
+                                  'Signature & Essential Range',
+                                  'Portsmouth City Collection',
+                                  'Pride Collection🏳️‍🌈',
+                                  'Graduation🎓',
+                                ],
+                                onSelected: (value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('$value - Coming soon!')),
+                                  );
+                                },
+                              ),
+                              const SizedBox(width: 12),
+                              // The Print Shack dropdown
+                              _HoverDropdown(
+                                label: 'The Print Shack',
+                                isActive: widget.activePage == 'printshack',
+                                items: const [
+                                  'About',
+                                  'Personalisation',
+                                ],
+                                onSelected: (value) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('$value - Coming soon!')),
+                                  );
+                                },
+                              ),
+                              const SizedBox(width: 12),
+                              _HoverButton(
+                                label: 'SALE!',
+                                isActive: widget.activePage == 'sale',
+                                onPressed: () => _navigateToSale(context),
+                              ),
+                              const SizedBox(width: 12),
+                              _HoverButton(
+                                label: 'About',
+                                isActive: widget.activePage == 'about',
+                                onPressed: widget.activePage == 'about' ? null : () => _navigateToAbout(context),
+                              ),
+                            ],
+                          ),
                         ),
-                        const SizedBox(width: 12),
-                        // Shop dropdown
-                        _HoverDropdown(
-                          label: 'Shop',
-                          isActive: widget.activePage == 'shop',
-                          items: const [
-                            'Clothing',
-                            'Merchandise',
-                            'Signature & Essential Range',
-                            'Portsmouth City Collection',
-                            'Pride Collection🏳️‍🌈',
-                            'Graduation🎓',
-                          ],
-                          onSelected: (value) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('$value - Coming soon!')),
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 12),
-                        // The Print Shack dropdown
-                        _HoverDropdown(
-                          label: 'The Print Shack',
-                          isActive: widget.activePage == 'printshack',
-                          items: const [
-                            'About',
-                            'Personalisation',
-                          ],
-                          onSelected: (value) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('$value - Coming soon!')),
-                            );
-                          },
-                        ),
-                        const SizedBox(width: 12),
-                        _HoverButton(
-                          label: 'SALE!',
-                          isActive: widget.activePage == 'sale',
-                          onPressed: () => _navigateToSale(context),
-                        ),
-                        const SizedBox(width: 12),
-                        _HoverButton(
-                          label: 'About',
-                          isActive: widget.activePage == 'about',
-                          onPressed: widget.activePage == 'about' ? null : () => _navigateToAbout(context),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                   // Icons (right)

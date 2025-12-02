@@ -8,7 +8,7 @@ class Footer extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Colors.grey[50],
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 80),
       child: LayoutBuilder(
         builder: (context, constraints) {
           // Responsive: single column on mobile, row on desktop
@@ -29,7 +29,7 @@ class Footer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(flex: 1, child: _buildAboutColumn(context)),
-                const SizedBox(width: 40),
+                const SizedBox(width: 80),
                 Expanded(flex: 2, child: _buildHelpColumn()),
                 const SizedBox(width: 40),
                 Expanded(flex: 3, child: _buildLatestOffersColumn()),

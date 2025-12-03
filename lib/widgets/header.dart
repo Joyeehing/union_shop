@@ -181,7 +181,9 @@ class _HeaderState extends State<Header> {
                             minWidth: 32,
                             minHeight: 32,
                           ),
-                          onPressed: _placeholderCallback,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/login');
+                          },
                         ),
                         IconButton(
                           icon: const Icon(
@@ -305,7 +307,7 @@ class _HeaderState extends State<Header> {
                 title: const Text('Account'),
                 onTap: () {
                   Navigator.pop(context);
-                  _placeholderCallback();
+                  Navigator.pushNamed(context, '/login');
                 },
               ),
               ListTile(

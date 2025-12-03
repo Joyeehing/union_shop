@@ -28,7 +28,7 @@ class AboutPage extends StatelessWidget {
                       child: Text(
                         'About us',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 25,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF4A4A4A),
                         ),

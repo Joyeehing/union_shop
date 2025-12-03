@@ -140,7 +140,7 @@ User stories
 - As a user, I want to see validation messages for invalid input.
 
 Acceptance criteria
-- [ ] Login and Signup screens accessible via navbar or footer links.
+- [ ] Login and Signup screens accessible via navbar links.
 - [ ] Forms validate required fields and email format before submission.
 - [ ] Submitting valid inputs shows a success state or navigates to a stub account page.
 - [ ] Invalid inputs show inline validation errors.

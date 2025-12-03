@@ -67,8 +67,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
         );
         
-        // Navigate to account stub page
-        Navigator.pushReplacementNamed(context, '/account');
+        // Navigate to home page
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       }
     }
   }

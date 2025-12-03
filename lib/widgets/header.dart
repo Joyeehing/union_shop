@@ -30,6 +30,9 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isDesktop = screenWidth > 768;
+
     return Container(
       height: 100,
       color: Colors.white,
@@ -79,79 +82,81 @@ class _HeaderState extends State<Header> {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  // Center navigation (Home and About) - desktop view
-                  Expanded(
-                    child: Center(
-                      child: ClipRect(
-                        child: OverflowBox(
-                          maxWidth: double.infinity,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _HoverButton(
-                                label: 'Home',
-                                isActive: widget.activePage == 'home',
-                                onPressed: () => _navigateToHome(context),
-                              ),
-                              const SizedBox(width: 12),
-                              // Shop dropdown
-                              _HoverDropdown(
-                                label: 'Shop',
-                                isActive: widget.activePage == 'shop',
-                                items: const [
-                                  'Clothing',
-                                  'Merchandise',
-                                  'Signature & Essential Range',
-                                  'Portsmouth City Collection',
-                                  'Pride Collection🏳️‍🌈',
-                                  'Graduation🎓',
-                                ],
-                                onSelected: (value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('$value - Coming soon!')),
-                                  );
-                                },
-                              ),
-                              const SizedBox(width: 12),
-                              // The Print Shack dropdown
-                              _HoverDropdown(
-                                label: 'The Print Shack',
-                                isActive: widget.activePage == 'printshack',
-                                items: const [
-                                  'About',
-                                  'Personalisation',
-                                ],
-                                onSelected: (value) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text('$value - Coming soon!')),
-                                  );
-                                },
-                              ),
-                              const SizedBox(width: 12),
-                              _HoverButton(
-                                label: 'SALE!',
-                                isActive: widget.activePage == 'sale',
-                                onPressed: () => _navigateToSale(context),
-                              ),
-                              const SizedBox(width: 12),
-                              _HoverButton(
-                                label: 'About',
-                                isActive: widget.activePage == 'about',
-                                onPressed: widget.activePage == 'about' ? null : () => _navigateToAbout(context),
-                              ),
-                            ],
+                  // Center navigation - desktop view only
+                  if (isDesktop)
+                    Expanded(
+                      child: Center(
+                        child: ClipRect(
+                          child: OverflowBox(
+                            maxWidth: double.infinity,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _HoverButton(
+                                  label: 'Home',
+                                  isActive: widget.activePage == 'home',
+                                  onPressed: () => _navigateToHome(context),
+                                ),
+                                const SizedBox(width: 12),
+                                // Shop dropdown
+                                _HoverDropdown(
+                                  label: 'Shop',
+                                  isActive: widget.activePage == 'shop',
+                                  items: const [
+                                    'Clothing',
+                                    'Merchandise',
+                                    'Signature & Essential Range',
+                                    'Portsmouth City Collection',
+                                    'Pride Collection🏳️‍🌈',
+                                    'Graduation🎓',
+                                  ],
+                                  onSelected: (value) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('$value - Coming soon!')),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(width: 12),
+                                // The Print Shack dropdown
+                                _HoverDropdown(
+                                  label: 'The Print Shack',
+                                  isActive: widget.activePage == 'printshack',
+                                  items: const [
+                                    'About',
+                                    'Personalisation',
+                                  ],
+                                  onSelected: (value) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text('$value - Coming soon!')),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(width: 12),
+                                _HoverButton(
+                                  label: 'SALE!',
+                                  isActive: widget.activePage == 'sale',
+                                  onPressed: () => _navigateToSale(context),
+                                ),
+                                const SizedBox(width: 12),
+                                _HoverButton(
+                                  label: 'About',
+                                  isActive: widget.activePage == 'about',
+                                  onPressed: widget.activePage == 'about' ? null : () => _navigateToAbout(context),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                    )
+                  else
+                    const Spacer(),
                   // Icons (right)
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 600),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (isDesktop) ...[
                         IconButton(
                           icon: const Icon(
                             Icons.search,
@@ -191,21 +196,21 @@ class _HeaderState extends State<Header> {
                           ),
                           onPressed: _placeholderCallback,
                         ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.menu,
-                            size: 18,
-                            color: Colors.grey,
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          constraints: const BoxConstraints(
-                            minWidth: 32,
-                            minHeight: 32,
-                          ),
-                          onPressed: _placeholderCallback,
-                        ),
                       ],
-                    ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.menu,
+                          size: 18,
+                          color: Colors.grey,
+                        ),
+                        padding: const EdgeInsets.all(8),
+                        constraints: const BoxConstraints(
+                          minWidth: 32,
+                          minHeight: 32,
+                        ),
+                        onPressed: () => _openDrawer(context),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -213,6 +218,108 @@ class _HeaderState extends State<Header> {
           ),
         ],
       ),
+    );
+  }
+
+  void _openDrawer(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.white,
+          child: ListView(
+            children: [
+              ListTile(
+                leading: const Icon(Icons.home, color: Color(0xFF333333)),
+                title: const Text('Home'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToHome(context);
+                },
+              ),
+              ExpansionTile(
+                leading: const Icon(Icons.shopping_bag, color: Color(0xFF333333)),
+                title: const Text('Shop'),
+                children: [
+                  'Clothing',
+                  'Merchandise',
+                  'Signature & Essential Range',
+                  'Portsmouth City Collection',
+                  'Pride Collection🏳️‍🌈',
+                  'Graduation🎓',
+                ].map((item) => ListTile(
+                  title: Text(item),
+                  contentPadding: const EdgeInsets.only(left: 72),
+                  onTap: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('$item - Coming soon!')),
+                    );
+                  },
+                )).toList(),
+              ),
+              ExpansionTile(
+                leading: const Icon(Icons.print, color: Color(0xFF333333)),
+                title: const Text('The Print Shack'),
+                children: [
+                  'About',
+                  'Personalisation',
+                ].map((item) => ListTile(
+                  title: Text(item),
+                  contentPadding: const EdgeInsets.only(left: 72),
+                  onTap: () {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('$item - Coming soon!')),
+                    );
+                  },
+                )).toList(),
+              ),
+              ListTile(
+                leading: const Icon(Icons.local_offer, color: Color(0xFF333333)),
+                title: const Text('SALE!'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToSale(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.info_outline, color: Color(0xFF333333)),
+                title: const Text('About'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _navigateToAbout(context);
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.search, color: Color(0xFF333333)),
+                title: const Text('Search'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _placeholderCallback();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.person_outline, color: Color(0xFF333333)),
+                title: const Text('Account'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _placeholderCallback();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.shopping_bag_outlined, color: Color(0xFF333333)),
+                title: const Text('Cart'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _placeholderCallback();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

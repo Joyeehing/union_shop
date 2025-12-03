@@ -31,10 +31,10 @@ User stories
 - As a user, I want tapping a navbar link to navigate to the indicated page or a stub.
 
 Acceptance criteria
-- [ ] Navbar shows logo, menu icon and at least three link targets (Home, Collections, Cart or Account).
-- [ ] Tapping the menu icon opens a side-drawer or dropdown containing the same links.
-- [ ] Tapping a navbar link navigates to a matching route (real or stub).
-- [ ] Navbar remains visible and usable on mobile view.
+- [x] Navbar shows logo, menu icon and at least three link targets (Home, Collections, Cart or Account).
+- [x] Tapping the menu icon opens a side-drawer or dropdown containing the same links.
+- [x] Tapping a navbar link navigates to a matching route (real or stub).
+- [x] Navbar remains visible and usable on mobile view.
 
 ---
 
@@ -62,9 +62,9 @@ User stories
 - As a user, I expect external links to open in a browser tab.
 
 Acceptance criteria
-- [ ] Footer included on the homepage (minimum).
-- [ ] Footer displays at least three links: Contact, Privacy/Terms, Social.
-- [ ] Internal links navigate to their routes; external links open a new browser tab/window.
+- [x] Footer included on the homepage (minimum).
+- [x] Footer displays at least three links: Contact, Privacy/Terms, Social.
+- [x] Internal links navigate to their routes; external links open a new browser tab/window.
 
 ---
 
@@ -77,9 +77,9 @@ User stories
 - As a shopper, I want to open a collection to see its products.
 
 Acceptance criteria
-- [ ] Collections page lists at least 6 collections with image, title and item count.
-- [ ] Tapping a collection card navigates to the corresponding collection page route.
-- [ ] Optional sort/filter controls may be visible (may be non-functional for basic implementation).
+- [x] Collections page lists at least 6 collections with image, title and item count.
+- [x] Tapping a collection card navigates to the corresponding collection page route.
+- [x] Optional sort/filter controls may be visible (may be non-functional for basic implementation).
 
 ---
 
@@ -124,10 +124,10 @@ User stories
 - As a shopper, I want to view product details for sale items.
 
 Acceptance criteria
-- [ ] Sale collection page displays promotional banner and list of sale items.
-- [ ] Each sale product shows original price struck-through and sale price.
-- [ ] Tapping a product navigates to product page.
-- [ ] Tapping the promotional banner either filters to sale items or opens the sale collection.
+- [x] Sale collection page displays promotional banner and list of sale items.
+- [x] Each sale product shows original price struck-through and sale price.
+- [x] Tapping a product navigates to product page.
+- [x] Tapping the promotional banner either filters to sale items or opens the sale collection.
 
 ---
 
@@ -140,10 +140,10 @@ User stories
 - As a user, I want to see validation messages for invalid input.
 
 Acceptance criteria
-- [ ] Login and Signup screens accessible via navbar links.
-- [ ] Forms validate required fields and email format before submission.
-- [ ] Submitting valid inputs shows a success state or navigates to a stub account page.
-- [ ] Invalid inputs show inline validation errors.
+- [x] Login and Signup screens accessible via navbar links.
+- [x] Forms validate required fields and email format before submission.
+- [x] Submitting valid inputs shows a success state or navigates to a stub account page.
+- [x] Invalid inputs show inline validation errors.
 
 ---
 

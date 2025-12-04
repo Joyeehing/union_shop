@@ -12,11 +12,13 @@ class PersonalisationPage extends StatefulWidget {
 class _PersonalisationPageState extends State<PersonalisationPage> {
   String _selectedLines = 'One Line of Text';
   final _textController = TextEditingController();
+  final _textController2 = TextEditingController();
   int _quantity = 1;
 
   @override
   void dispose() {
     _textController.dispose();
+    _textController2.dispose();
     super.dispose();
   }
 
@@ -282,6 +284,48 @@ class _PersonalisationPageState extends State<PersonalisationPage> {
           ),
         ),
         const SizedBox(height: 24),
+
+        // Personalisation Line 2 (only show if Two Lines selected)
+        if (_selectedLines == 'Two Lines of Text') ...[
+          Text(
+            'Personalisation Line 2:',
+            style: TextStyle(
+              fontSize: isMobile ? 14 : 15,
+              fontWeight: FontWeight.w500,
+              color: const Color(0xFF333333),
+            ),
+          ),
+          const SizedBox(height: 8),
+          TextField(
+            controller: _textController2,
+            decoration: InputDecoration(
+              hintText: 'Enter your text',
+              hintStyle: TextStyle(
+                fontSize: isMobile ? 14 : 15,
+                color: const Color(0xFF999999),
+              ),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 12,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: const BorderSide(color: Color(0xFF4d2963)),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+        ],
 
         // Quantity
         Text(

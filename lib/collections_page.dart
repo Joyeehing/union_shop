@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'widgets/header.dart';
 import 'widgets/footer.dart';
+import 'services/cart_service.dart';
 
-class CollectionsPage extends StatelessWidget {
+class CollectionsPage extends StatefulWidget {
   const CollectionsPage({super.key});
 
   @override
+  State<CollectionsPage> createState() => _CollectionsPageState();
+}
+
+class _CollectionsPageState extends State<CollectionsPage> {
+  final CartService _cartService = CartService();
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Header(activePage: 'collections'),
+    return ListenableBuilder(
+      listenable: _cartService,
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Header(activePage: 'collections', cartItemCount: _cartService.itemCount),
             
             // Collections content
             LayoutBuilder(
@@ -82,6 +93,8 @@ class CollectionsPage extends StatelessWidget {
           ],
         ),
       ),
+        );
+      },
     );
   }
 }

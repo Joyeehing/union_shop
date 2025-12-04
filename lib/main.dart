@@ -10,6 +10,7 @@ import 'personalisation_page.dart';
 import 'widgets/footer.dart';
 import 'widgets/header.dart';
 import 'services/cart_service.dart';
+import 'models/cart_item.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -309,14 +310,16 @@ class ProductCard extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 final priceValue = double.parse(price.replaceAll('£', ''));
-                cartService.addItem(
+                final cartItem = CartItem(
                   id: '$productId-$selectedSize-$selectedColor',
                   name: title,
                   imageUrl: imageUrl,
                   price: priceValue,
                   size: selectedSize,
                   color: selectedColor,
+                  quantity: 1,
                 );
+                cartService.addItem(cartItem, id: '$productId-$selectedSize-$selectedColor');
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -347,35 +350,17 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
-                      color: Colors.grey[300],
-                      child: const Center(
-                        child: Icon(Icons.image_not_supported, color: Colors.grey),
-                      ),
-                    );
-                  },
-                ),
-                Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: IconButton(
-                    onPressed: () => _showQuickAddDialog(context),
-                    icon: const Icon(Icons.add_shopping_cart),
-                    style: IconButton.styleFrom(
-                      backgroundColor: const Color(0xFF4d2963),
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                    ),
+            child: Image.network(
+              imageUrl,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: Colors.grey[300],
+                  child: const Center(
+                    child: Icon(Icons.image_not_supported, color: Colors.grey),
                   ),
-                ),
-              ],
+                );
+              },
             ),
           ),
           Column(                     

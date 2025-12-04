@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'widgets/header.dart';
 import 'widgets/footer.dart';
 import 'sale_detail_page.dart';
+import 'services/cart_service.dart';
 
 class SalePage extends StatefulWidget {
   const SalePage({super.key});
@@ -16,6 +17,7 @@ class _SalePageState extends State<SalePage> {
   int _currentPage = 1;
   final int _itemsPerPage = 8;
   final ScrollController _scrollController = ScrollController();
+  final CartService _cartService = CartService();
 
   List<SaleItem> get filteredAndSortedItems {
     List<SaleItem> items = List.from(saleItems);
@@ -122,13 +124,16 @@ class _SalePageState extends State<SalePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            const Header(activePage: 'sale'),
+    return ListenableBuilder(
+      listenable: _cartService,
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              children: [
+                Header(activePage: 'sale', cartItemCount: _cartService.itemCount),
             
             // Page Title
             LayoutBuilder(
@@ -335,6 +340,8 @@ class _SalePageState extends State<SalePage> {
           ],
         ),
       ),
+        );
+      },
     );
   }
 

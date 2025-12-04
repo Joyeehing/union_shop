@@ -107,64 +107,108 @@ class _SalePageState extends State<SalePage> {
             const Header(activePage: 'sale'),
             
             // Page Title
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 80),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'SALE',
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF333333),
-                      letterSpacing: 2,
-                    ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 768;
+                return Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: isMobile ? 24 : 40,
+                    horizontal: isMobile ? 16 : 80,
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Don\'t miss out! Get yours before they\'re all gone!\n\nAll prices shown are inclusive of the discount 🛒',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF666666),
-                      height: 1.5,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'SALE',
+                        style: TextStyle(
+                          fontSize: isMobile ? 28 : 32,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF333333),
+                          letterSpacing: 2,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Don\'t miss out! Get yours before they\'re all gone!\n\nAll prices shown are inclusive of the discount 🛒',
+                        style: TextStyle(
+                          fontSize: isMobile ? 14 : 16,
+                          color: const Color(0xFF666666),
+                          height: 1.5,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
 
             // Filter and Sort Controls
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
-              child: Row(
-                children: [
-                  _buildFilterDropdown(),
-                  const SizedBox(width: 16),
-                  _buildSortDropdown(),
-                  const Spacer(),
-                  Text(
-                    '${filteredAndSortedItems.length} Products',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF666666),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 768;
+                return Container(
+                  padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 80),
+                  child: isMobile
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            _buildFilterDropdown(),
+                            const SizedBox(height: 12),
+                            _buildSortDropdown(),
+                            const SizedBox(height: 12),
+                            Center(
+                              child: Text(
+                                '${filteredAndSortedItems.length} Products',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xFF666666),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          children: [
+                            _buildFilterDropdown(),
+                            const SizedBox(width: 16),
+                            _buildSortDropdown(),
+                            const Spacer(),
+                            Text(
+                              '${filteredAndSortedItems.length} Products',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFF666666),
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                );
+              },
             ),
 
             const SizedBox(height: 20),
 
             // Sale Items Grid
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  int crossAxisCount = constraints.maxWidth > 900 ? 4 : 2;
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 768;
+                return Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 16 : 80,
+                    vertical: 20,
+                  ),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      int crossAxisCount = constraints.maxWidth > 900
+                          ? 4
+                          : constraints.maxWidth > 600
+                              ? 2
+                              : 1;
                   
                   final items = paginatedItems;
+                  final isMobileGrid = constraints.maxWidth < 768;
                   
                   if (filteredAndSortedItems.isEmpty) {
                     return const Center(
@@ -187,8 +231,8 @@ class _SalePageState extends State<SalePage> {
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
                       childAspectRatio: 0.75,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
+                      crossAxisSpacing: isMobileGrid ? 12 : 20,
+                      mainAxisSpacing: isMobileGrid ? 12 : 20,
                     ),
                     itemCount: items.length,
                     itemBuilder: (context, index) {
@@ -198,13 +242,21 @@ class _SalePageState extends State<SalePage> {
                   );
                 },
               ),
-            ),
+            );
+          },
+        ),
 
             // Pagination
             if (totalPages > 1)
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-                child: Row(
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final isMobile = constraints.maxWidth < 768;
+                  return Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 16 : 80,
+                      vertical: 20,
+                    ),
+                    child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Previous button
@@ -250,7 +302,9 @@ class _SalePageState extends State<SalePage> {
                     ),
                   ],
                 ),
-              ),
+              );
+            },
+          ),
 
             const SizedBox(height: 40),
             const Footer(),

@@ -118,56 +118,62 @@ class _SignupPageState extends State<SignupPage> {
             const Header(activePage: 'signup'),
             
             // Signup Form
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 60),
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 450),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Account Icon
-                      Center(
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF4d2963).withOpacity(0.1),
-                            shape: BoxShape.circle,
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 768;
+                return Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 16 : 24,
+                    vertical: isMobile ? 24 : 60,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 450),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Account Icon
+                          Center(
+                            child: Container(
+                              width: isMobile ? 60 : 80,
+                              height: isMobile ? 60 : 80,
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF4d2963).withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.person_outline,
+                                size: isMobile ? 30 : 40,
+                                color: const Color(0xFF4d2963),
+                              ),
+                            ),
                           ),
-                          child: const Icon(
-                            Icons.person_outline,
-                            size: 40,
-                            color: Color(0xFF4d2963),
+                          SizedBox(height: isMobile ? 16 : 24),
+                          
+                          // Title
+                          Center(
+                            child: Text(
+                              'Create Account',
+                              style: TextStyle(
+                                fontSize: isMobile ? 28 : 32,
+                                fontWeight: FontWeight.bold,
+                                color: const Color(0xFF333333),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      
-                      // Title
-                      const Center(
-                        child: Text(
-                          'Create Account',
-                          style: TextStyle(
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF333333),
+                          const SizedBox(height: 8),
+                          Center(
+                            child: Text(
+                              'Sign up to start shopping with us!',
+                              style: TextStyle(
+                                fontSize: isMobile ? 13 : 14,
+                                color: const Color(0xFF666666),
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Center(
-                        child: Text(
-                          'Sign up to start shopping with us!',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF666666),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      const SizedBox(height: 40),
+                          SizedBox(height: isMobile ? 32 : 40),
                       
                       // Signup Form
                       Form(
@@ -495,8 +501,10 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ],
                   ),
-                ),
-              ),
+                  ),
+                  ),
+                );
+              },
             ),
             
             const Footer(),

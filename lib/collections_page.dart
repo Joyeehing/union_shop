@@ -15,59 +15,67 @@ class CollectionsPage extends StatelessWidget {
             const Header(activePage: 'collections'),
             
             // Collections content
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 60),
-              child: Column(
-                children: [
-                  // Title
-                  const Text(
-                    'Our Collections',
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF333333),
-                    ),
+            LayoutBuilder(
+              builder: (context, constraints) {
+                final isMobile = constraints.maxWidth < 768;
+                return Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 16 : 80,
+                    vertical: isMobile ? 24 : 60,
                   ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Explore our curated collections',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Color(0xFF666666),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  
-                  // Collections Grid
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      int crossAxisCount = constraints.maxWidth > 900 ? 3 : 
-                                          constraints.maxWidth > 600 ? 2 : 1;
-                      return GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: crossAxisCount,
-                          crossAxisSpacing: 24,
-                          mainAxisSpacing: 24,
-                          childAspectRatio: 0.75,
+                  child: Column(
+                    children: [
+                      // Title
+                      Text(
+                        'Our Collections',
+                        style: TextStyle(
+                          fontSize: isMobile ? 28 : 36,
+                          fontWeight: FontWeight.bold,
+                          color: const Color(0xFF333333),
                         ),
-                        itemCount: collections.length,
-                        itemBuilder: (context, index) {
-                          final collection = collections[index];
-                          return _CollectionCard(
-                            title: collection['title']!,
-                            description: collection['description']!,
-                            imageUrl: collection['imageUrl']!,
-                            route: collection['route']!,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Explore our curated collections',
+                        style: TextStyle(
+                          fontSize: isMobile ? 16 : 18,
+                          color: const Color(0xFF666666),
+                        ),
+                      ),
+                      SizedBox(height: isMobile ? 24 : 40),
+                  
+                      // Collections Grid
+                      LayoutBuilder(
+                        builder: (context, constraints) {
+                          int crossAxisCount = constraints.maxWidth > 900 ? 3 : 
+                                              constraints.maxWidth > 600 ? 2 : 1;
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: 24,
+                              mainAxisSpacing: 24,
+                              childAspectRatio: 0.75,
+                            ),
+                            itemCount: collections.length,
+                            itemBuilder: (context, index) {
+                              final collection = collections[index];
+                              return _CollectionCard(
+                                title: collection['title']!,
+                                description: collection['description']!,
+                                imageUrl: collection['imageUrl']!,
+                                route: collection['route']!,
+                              );
+                            },
                           );
                         },
-                      );
-                    },
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
             
             const Footer(),
@@ -113,7 +121,7 @@ class _CollectionCardState extends State<_CollectionCard> {
             borderRadius: BorderRadius.circular(8),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(_isHovered ? 0.15 : 0.08),
+                color: Colors.black.withValues(alpha: _isHovered ? 0.15 : 0.08),
                 blurRadius: _isHovered ? 16 : 8,
                 offset: const Offset(0, 4),
               ),
@@ -152,7 +160,7 @@ class _CollectionCardState extends State<_CollectionCard> {
                       ),
                       if (_isHovered)
                         Container(
-                          color: const Color(0xFF4d2963).withOpacity(0.2),
+                          color: const Color(0xFF4d2963).withValues(alpha: 0.2),
                         ),
                     ],
                   ),
@@ -202,10 +210,10 @@ class _CollectionCardState extends State<_CollectionCard> {
                             ),
                           ),
                           const SizedBox(width: 4),
-                          Icon(
+                          const Icon(
                             Icons.arrow_forward,
                             size: 16,
-                            color: const Color(0xFF4d2963),
+                            color: Color(0xFF4d2963),
                           ),
                         ],
                       ),

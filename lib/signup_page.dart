@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/header.dart';
 import 'widgets/footer.dart';
+import 'services/cart_service.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -19,6 +20,7 @@ class _SignupPageState extends State<SignupPage> {
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
   bool _acceptTerms = false;
+  final CartService _cartService = CartService();
 
   @override
   void dispose() {
@@ -110,12 +112,15 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Header(activePage: 'signup'),
+    return ListenableBuilder(
+      listenable: _cartService,
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Header(activePage: 'signup', cartItemCount: _cartService.itemCount),
             
             // Signup Form
             LayoutBuilder(
@@ -511,6 +516,8 @@ class _SignupPageState extends State<SignupPage> {
           ],
         ),
       ),
+        );
+      },
     );
   }
 }

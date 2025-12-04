@@ -115,6 +115,13 @@ void main() {
 
       await tester.pumpAndSettle();
 
+      // Accept terms and conditions first - scroll to checkbox
+      final checkbox = find.byType(Checkbox);
+      await tester.ensureVisible(checkbox);
+      await tester.pumpAndSettle();
+      await tester.tap(checkbox);
+      await tester.pumpAndSettle();
+
       // Scroll to make button visible
       await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'CREATE ACCOUNT'));
       await tester.pumpAndSettle();
@@ -154,6 +161,13 @@ void main() {
       
       // Enter different confirm password
       await tester.enterText(textFields.at(3), 'password456');
+
+      // Accept terms and conditions - scroll to checkbox
+      final checkbox = find.byType(Checkbox);
+      await tester.ensureVisible(checkbox);
+      await tester.pumpAndSettle();
+      await tester.tap(checkbox);
+      await tester.pumpAndSettle();
       
       // Scroll to make button visible
       await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'CREATE ACCOUNT'));
@@ -164,6 +178,37 @@ void main() {
 
       // Verify password mismatch error
       expect(find.text('Passwords do not match'), findsOneWidget);
+    });
+
+    testWidgets('SignupPage requires terms acceptance', (WidgetTester tester) async {
+      await tester.pumpWidget(MaterialApp(
+        initialRoute: '/signup',
+        routes: {
+          '/': (context) => const Scaffold(body: Center(child: Text('Home'))),
+          '/signup': (context) => const SignupPage(),
+        },
+      ));
+
+      await tester.pumpAndSettle();
+
+      // Find text fields and fill them
+      final textFields = find.byType(TextFormField);
+      
+      await tester.enterText(textFields.at(0), 'John Doe');
+      await tester.enterText(textFields.at(1), 'john@example.com');
+      await tester.enterText(textFields.at(2), 'password123');
+      await tester.enterText(textFields.at(3), 'password123');
+      
+      // Scroll to make button visible
+      await tester.ensureVisible(find.widgetWithText(ElevatedButton, 'CREATE ACCOUNT'));
+      await tester.pumpAndSettle();
+      
+      // Try to submit without accepting terms
+      await tester.tap(find.widgetWithText(ElevatedButton, 'CREATE ACCOUNT'));
+      await tester.pumpAndSettle();
+
+      // Verify terms acceptance error message
+      expect(find.text('Please accept the terms and conditions'), findsOneWidget);
     });
   });
 }

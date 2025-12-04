@@ -127,9 +127,13 @@ class _HeaderState extends State<Header> {
                                     'Personalisation',
                                   ],
                                   onSelected: (value) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text('$value - Coming soon!')),
-                                    );
+                                    if (value == 'About') {
+                                      Navigator.pushNamed(context, '/printshack');
+                                    } else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('$value - Coming soon!')),
+                                      );
+                                    }
                                   },
                                 ),
                                 const SizedBox(width: 12),
@@ -271,9 +275,13 @@ class _HeaderState extends State<Header> {
                   contentPadding: const EdgeInsets.only(left: 72),
                   onTap: () {
                     Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('$item - Coming soon!')),
-                    );
+                    if (item == 'About') {
+                      Navigator.pushNamed(context, '/printshack');
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('$item - Coming soon!')),
+                      );
+                    }
                   },
                 )).toList(),
               ),

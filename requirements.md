@@ -202,9 +202,9 @@ User stories
 - As a shopper, I want adding a product to update the cart count.
 
 Acceptance criteria
-- [ ] Product page obtains product data from the model/service.
-- [ ] Selecting a variant updates displayed attributes (price/availability) in the UI.
-- [ ] Add-to-cart updates an in-memory cart model and the cart icon badge count.
+- [x] Product page obtains product data from the model/service.
+- [x] Selecting a variant updates displayed attributes (price/availability) in the UI.
+- [x] Add-to-cart updates an in-memory cart model and the cart icon badge count.
 
 ---
 

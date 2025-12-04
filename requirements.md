@@ -14,11 +14,11 @@ User stories
 - As a user, I want tapping the logo to return me to the homepage.
 
 Acceptance criteria
-- [ ] Homepage displays a hero area, at least three featured product cards, at least two featured collection tiles, and one promotional banner.
-- [ ] Tapping a featured product opens the product page route.
-- [ ] Tapping a collection tile opens the collection page route.
-- [ ] Tapping the navbar logo navigates to the homepage.
-- [ ] Page scrolls normally and layout is optimized for small widths (mobile).
+- [x] Homepage displays a hero area, at least three featured product cards, at least two featured collection tiles, and one promotional banner.
+- [x] Tapping a featured product opens the product page route.
+- [x] Tapping a collection tile opens the collection page route.
+- [x] Tapping the navbar logo navigates to the homepage.
+- [x] Page scrolls normally and layout is optimized for small widths (mobile).
 
 ---
 
@@ -92,9 +92,9 @@ User stories
 - As a shopper, I want to tap a product to view details.
 
 Acceptance criteria
-- [ ] Collection page displays a grid/list of at least 8 product cards (hardcoded ok).
-- [ ] Product card includes thumbnail image, title and price.
-- [ ] Tapping a product card opens its product page route.
+- [x] Collection page displays a grid/list of at least 8 product cards (hardcoded ok).
+- [x] Product card includes thumbnail image, title and price.
+- [x] Tapping a product card opens its product page route.
 - [ ] Filter/sort UI may be present and must reflect selected state even if not changing results.
 
 ---
@@ -108,7 +108,7 @@ User stories
 - As a shopper, I want confirmation when I add an item to the cart.
 
 Acceptance criteria
-- [ ] Product page shows image carousel or single image, title, description and visible price.
+- [x] Product page shows image carousel or single image, title, description and visible price.
 - [ ] Variant selectors (at least size or color) are present and update selected state when changed.
 - [ ] Quantity selector updates displayed quantity.
 - [ ] Tapping "Add to Cart" shows an acknowledgement (snack/toast/dialog). Persistence optional for basic.
@@ -156,8 +156,8 @@ User stories
 - As a user, I want the back button to return to the previous page.
 
 Acceptance criteria
-- [ ] All main pages have addressable routes (e.g., /, /collections, /product/:id).
-- [ ] Navigating via in-app links updates the browser URL.
+- [x] All main pages have addressable routes (e.g., /, /collections, /product/:id).
+- [x] Navigating via in-app links updates the browser URL.
 - [ ] Reloading a route loads the expected page (web).
 - [ ] Browser/device back and forward work correctly.
 
@@ -249,10 +249,10 @@ User stories
 - As a mobile user, I want touch-friendly controls and single-column layout.
 
 Acceptance criteria
-- [ ] Layout adapts at common breakpoints (e.g., mobile < 600px, tablet 600–1024px, desktop > 1024px).
-- [ ] Product grids change number of columns according to width.
-- [ ] Navbar switches between mobile hamburger and full horizontal menu appropriately.
-- [ ] All interactive elements remain accessible and usable at each breakpoint.
+- [x] Layout adapts at common breakpoints (e.g., mobile < 600px, tablet 600–1024px, desktop > 1024px).
+- [x] Product grids change number of columns according to width.
+- [x] Navbar switches between mobile hamburger and full horizontal menu appropriately.
+- [x] All interactive elements remain accessible and usable at each breakpoint.
 
 ---
 

@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'widgets/header.dart';
 import 'widgets/footer.dart';
+import 'services/cart_service.dart';
 
-class AboutPrintShackPage extends StatelessWidget {
+class AboutPrintShackPage extends StatefulWidget {
   const AboutPrintShackPage({super.key});
 
   @override
+  State<AboutPrintShackPage> createState() => _AboutPrintShackPageState();
+}
+
+class _AboutPrintShackPageState extends State<AboutPrintShackPage> {
+  final CartService _cartService = CartService();
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Header(activePage: 'printshack'),
+    return ListenableBuilder(
+      listenable: _cartService,
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Header(activePage: 'printshack', cartItemCount: _cartService.itemCount),
             
             // Page Title
             LayoutBuilder(
@@ -137,6 +148,8 @@ class AboutPrintShackPage extends StatelessWidget {
           ],
         ),
       ),
+        );
+      },
     );
   }
 

@@ -46,50 +46,28 @@ class AboutPrintShackPage extends StatelessWidget {
                     horizontal: isMobile ? 16 : 80,
                     vertical: isMobile ? 16 : 24,
                   ),
-                  child: isMobile
-                      ? Column(
-                          children: [
-                            _buildImageCard(
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                              isMobile,
-                            ),
-                            const SizedBox(height: 16),
-                            _buildImageCard(
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                              isMobile,
-                            ),
-                            const SizedBox(height: 16),
-                            _buildImageCard(
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                              isMobile,
-                            ),
-                          ],
-                        )
-                      : Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: _buildImageCard(
-                                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                                isMobile,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: _buildImageCard(
-                                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                                isMobile,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: _buildImageCard(
-                                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                                isMobile,
-                              ),
-                            ),
-                          ],
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: _buildImageCard(
+                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                          isMobile,
                         ),
+                      ),
+                      Expanded(
+                        child: _buildImageCard(
+                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                          isMobile,
+                        ),
+                      ),
+                      Expanded(
+                        child: _buildImageCard(
+                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                          isMobile,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),
@@ -164,31 +142,18 @@ class AboutPrintShackPage extends StatelessWidget {
 
   Widget _buildImageCard(String imageUrl, bool isMobile) {
     return Container(
-      height: isMobile ? 250 : 300,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) {
-            return Container(
-              color: Colors.grey[300],
-              child: const Center(
-                child: Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
-              ),
-            );
-          },
-        ),
+      height: isMobile ? 150 : 300,
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return Container(
+            color: Colors.grey[300],
+            child: const Center(
+              child: Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+            ),
+          );
+        },
       ),
     );
   }

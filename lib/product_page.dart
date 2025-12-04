@@ -62,7 +62,7 @@ class _ProductPageState extends State<ProductPage> {
       quantity: _quantity,
     );
 
-    _cartService.addItem(cartItem);
+    _cartService.addItem(cartItem, id: '');
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

@@ -14,7 +14,7 @@ class CartService extends ChangeNotifier {
 
   double get total => _items.fold(0.0, (sum, item) => sum + (item.price * item.quantity));
 
-  void addItem(CartItem item) {
+  void addItem(CartItem item, {required String id}) {
     // Check if item with same variant already exists
     final existingIndex = _items.indexWhere((i) =>
         i.id == item.id && i.size == item.size && i.color == item.color);

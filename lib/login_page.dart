@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/header.dart';
 import 'widgets/footer.dart';
+import 'services/cart_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,6 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   bool _isLoading = false;
+  final CartService _cartService = CartService();
 
   @override
   void dispose() {
@@ -75,12 +77,15 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Header(activePage: 'login'),
+    return ListenableBuilder(
+      listenable: _cartService,
+      builder: (context, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Header(activePage: 'login', cartItemCount: _cartService.itemCount),
             
             // Login Form
             LayoutBuilder(
@@ -345,6 +350,8 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+        );
+      },
     );
   }
 }

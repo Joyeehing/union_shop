@@ -15,6 +15,7 @@ class _SalePageState extends State<SalePage> {
   String _selectedSort = 'Featured';
   int _currentPage = 1;
   final int _itemsPerPage = 8;
+  final ScrollController _scrollController = ScrollController();
 
   List<SaleItem> get filteredAndSortedItems {
     List<SaleItem> items = List.from(saleItems);
@@ -86,6 +87,14 @@ class _SalePageState extends State<SalePage> {
       setState(() {
         _currentPage++;
       });
+      // Use WidgetsBinding to ensure scroll happens after rebuild
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      });
     }
   }
 
@@ -94,7 +103,21 @@ class _SalePageState extends State<SalePage> {
       setState(() {
         _currentPage--;
       });
+      // Use WidgetsBinding to ensure scroll happens after rebuild
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollController.animateTo(
+          0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      });
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -102,6 +125,7 @@ class _SalePageState extends State<SalePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
             const Header(activePage: 'sale'),

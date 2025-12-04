@@ -129,6 +129,8 @@ class _HeaderState extends State<Header> {
                                   onSelected: (value) {
                                     if (value == 'About') {
                                       Navigator.pushNamed(context, '/printshack');
+                                    } else if (value == 'Personalisation') {
+                                      Navigator.pushNamed(context, '/personalisation');
                                     } else {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(content: Text('$value - Coming soon!')),
@@ -277,6 +279,8 @@ class _HeaderState extends State<Header> {
                     Navigator.pop(context);
                     if (item == 'About') {
                       Navigator.pushNamed(context, '/printshack');
+                    } else if (item == 'Personalisation') {
+                      Navigator.pushNamed(context, '/personalisation');
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('$item - Coming soon!')),

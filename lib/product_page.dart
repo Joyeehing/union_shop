@@ -1,251 +1,412 @@
 import 'package:flutter/material.dart';
+import 'widgets/header.dart';
+import 'widgets/footer.dart';
+import 'models/product.dart';
+import 'models/cart_item.dart';
+import 'services/cart_service.dart';
 
-class ProductPage extends StatelessWidget {
+class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
 
-  void navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+  @override
+  State<ProductPage> createState() => _ProductPageState();
+}
+
+class _ProductPageState extends State<ProductPage> {
+  late Product _product;
+  String? _selectedSize;
+  String? _selectedColor;
+  int _quantity = 1;
+  final CartService _cartService = CartService();
+
+  @override
+  void initState() {
+    super.initState();
+    _product = ProductService.getProductById('1');
+    _selectedSize = _product.sizes.isNotEmpty ? _product.sizes[0] : null;
+    _selectedColor = _product.colors.isNotEmpty ? _product.colors[0] : null;
   }
 
-  void placeholderCallbackForButtons() {
-    // This is the event handler for buttons that don't work yet
+  void _incrementQuantity() {
+    setState(() {
+      _quantity++;
+    });
+  }
+
+  void _decrementQuantity() {
+    if (_quantity > 1) {
+      setState(() {
+        _quantity--;
+      });
+    }
+  }
+
+  void _addToCart() {
+    if (_selectedSize == null || _selectedColor == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select size and color'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    final cartItem = CartItem(
+      id: _product.id,
+      name: _product.name,
+      imageUrl: _product.imageUrl,
+      price: _product.price,
+      size: _selectedSize!,
+      color: _selectedColor!,
+      quantity: _quantity,
+    );
+
+    _cartService.addItem(cartItem);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Added $_quantity × ${_product.name} to cart'),
+        backgroundColor: const Color(0xFF4d2963),
+        action: SnackBarAction(
+          label: 'VIEW CART',
+          textColor: Colors.white,
+          onPressed: () {
+            // Navigate to cart page (to be implemented)
+          },
+        ),
+      ),
+    );
+
+    // Reset quantity after adding
+    setState(() {
+      _quantity = 1;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header
-            Container(
-              height: 100,
-              color: Colors.white,
-              child: Column(
-                children: [
-                  // Top banner
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    color: const Color(0xFF4d2963),
-                    child: const Text(
-                      'PLACEHOLDER HEADER TEXT',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  // Main header
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              navigateToHome(context);
-                            },
-                            child: Image.network(
-                              'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
-                              height: 18,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  width: 18,
-                                  height: 18,
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          const Spacer(),
-                          ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: 600),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
+      backgroundColor: Colors.white,
+      body: ListenableBuilder(
+        listenable: _cartService,
+        builder: (context, child) {
+          return SingleChildScrollView(
+            child: Column(
+            children: [
+              // Header with cart badge
+              _buildHeader(context),
+
+              // Product details
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final isMobile = constraints.maxWidth < 768;
+                    return Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: isMobile ? 16 : 80,
+                        vertical: isMobile ? 24 : 48,
+                      ),
+                      child: isMobile
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.search,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
+                                _buildProductImage(isMobile),
+                                const SizedBox(height: 24),
+                                _buildProductDetails(isMobile),
+                              ],
+                            )
+                          : Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: _buildProductImage(isMobile),
                                 ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.person_outline,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.shopping_bag_outlined,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
-                                ),
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 18,
-                                    color: Colors.grey,
-                                  ),
-                                  padding: const EdgeInsets.all(8),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 32,
-                                    minHeight: 32,
-                                  ),
-                                  onPressed: placeholderCallbackForButtons,
+                                const SizedBox(width: 48),
+                                Expanded(
+                                  flex: 1,
+                                  child: _buildProductDetails(isMobile),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Product details
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final isMobile = constraints.maxWidth < 768;
-                return Container(
-                  color: Colors.white,
-                  padding: EdgeInsets.all(isMobile ? 16 : 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Product image
-                      Container(
-                        height: isMobile ? 250 : 300,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.grey[200],
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.network(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: Colors.grey[300],
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.image_not_supported,
-                                        size: isMobile ? 48 : 64,
-                                        color: Colors.grey,
-                                      ),
-                                      const SizedBox(height: 8),
-                                      const Text(
-                                        'Image unavailable',
-                                        style: TextStyle(color: Colors.grey),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(height: isMobile ? 16 : 24),
-
-                      // Product name
-                      Text(
-                        'Placeholder Product Name',
-                        style: TextStyle(
-                          fontSize: isMobile ? 24 : 28,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-
-                      SizedBox(height: isMobile ? 8 : 12),
-
-                      // Product price
-                      Text(
-                        '£15.00',
-                        style: TextStyle(
-                          fontSize: isMobile ? 20 : 24,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF4d2963),
-                        ),
-                      ),
-
-                      SizedBox(height: isMobile ? 16 : 24),
-
-                      // Product description
-                      Text(
-                        'Description',
-                        style: TextStyle(
-                          fontSize: isMobile ? 16 : 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'This is a placeholder description for the product. Students should replace this with real product information and implement proper data management.',
-                        style: TextStyle(
-                          fontSize: isMobile ? 14 : 16,
-                          color: Colors.grey,
-                          height: 1.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-
-            // Footer
-            Container(
-              width: double.infinity,
-              color: Colors.grey[50],
-              padding: const EdgeInsets.all(24),
-              child: const Text(
-                'Placeholder Footer',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                    );
+                  },
                 ),
+
+                const Footer(),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Header(
+      activePage: '',
+      cartItemCount: _cartService.itemCount,
+    );
+  }
+
+  Widget _buildProductImage(bool isMobile) {
+    return Container(
+      height: isMobile ? 300 : 500,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[300]!),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          _product.imageUrl,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: Colors.grey[300],
+              child: const Center(
+                child: Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProductDetails(bool isMobile) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Product name
+        Text(
+          _product.name,
+          style: TextStyle(
+            fontSize: isMobile ? 24 : 32,
+            fontWeight: FontWeight.bold,
+            color: const Color(0xFF333333),
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // Product price
+        Text(
+          '£${_product.price.toStringAsFixed(2)}',
+          style: TextStyle(
+            fontSize: isMobile ? 20 : 24,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF4d2963),
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // Stock status
+        Row(
+          children: [
+            Icon(
+              _product.inStock ? Icons.check_circle : Icons.cancel,
+              size: 16,
+              color: _product.inStock ? Colors.green : Colors.red,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              _product.inStock ? 'In Stock' : 'Out of Stock',
+              style: TextStyle(
+                fontSize: isMobile ? 14 : 15,
+                color: _product.inStock ? Colors.green : Colors.red,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-      ),
+        const SizedBox(height: 24),
+
+        // Size selector
+        Text(
+          'Size',
+          style: TextStyle(
+            fontSize: isMobile ? 14 : 16,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF333333),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: _product.sizes.map((size) {
+            final isSelected = size == _selectedSize;
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedSize = size;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: isSelected ? const Color(0xFF4d2963) : Colors.grey[300]!,
+                    width: isSelected ? 2 : 1,
+                  ),
+                  borderRadius: BorderRadius.circular(4),
+                  color: isSelected ? const Color(0xFF4d2963).withValues(alpha: 0.1) : Colors.white,
+                ),
+                child: Text(
+                  size,
+                  style: TextStyle(
+                    fontSize: isMobile ? 14 : 15,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                    color: isSelected ? const Color(0xFF4d2963) : const Color(0xFF333333),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 24),
+
+        // Color selector
+        Text(
+          'Color',
+          style: TextStyle(
+            fontSize: isMobile ? 14 : 16,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF333333),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: _product.colors.map((color) {
+            final isSelected = color == _selectedColor;
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedColor = color;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: isSelected ? const Color(0xFF4d2963) : Colors.grey[300]!,
+                    width: isSelected ? 2 : 1,
+                  ),
+                  borderRadius: BorderRadius.circular(4),
+                  color: isSelected ? const Color(0xFF4d2963).withValues(alpha: 0.1) : Colors.white,
+                ),
+                child: Text(
+                  color,
+                  style: TextStyle(
+                    fontSize: isMobile ? 14 : 15,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                    color: isSelected ? const Color(0xFF4d2963) : const Color(0xFF333333),
+                  ),
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 24),
+
+        // Quantity selector
+        Text(
+          'Quantity',
+          style: TextStyle(
+            fontSize: isMobile ? 14 : 16,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF333333),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300]!),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove, size: 18),
+                    onPressed: _decrementQuantity,
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      '$_quantity',
+                      style: TextStyle(
+                        fontSize: isMobile ? 14 : 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.add, size: 18),
+                    onPressed: _incrementQuantity,
+                    padding: const EdgeInsets.all(8),
+                    constraints: const BoxConstraints(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 32),
+
+        // Add to cart button
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: _product.inStock ? _addToCart : null,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF4d2963),
+              foregroundColor: Colors.white,
+              padding: EdgeInsets.symmetric(
+                vertical: isMobile ? 14 : 16,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              elevation: 0,
+              disabledBackgroundColor: Colors.grey[300],
+            ),
+            child: Text(
+              _product.inStock ? 'ADD TO CART' : 'OUT OF STOCK',
+              style: TextStyle(
+                fontSize: isMobile ? 14 : 16,
+                fontWeight: FontWeight.w600,
+                letterSpacing: 1,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 32),
+
+        // Product description
+        Text(
+          'Description',
+          style: TextStyle(
+            fontSize: isMobile ? 16 : 18,
+            fontWeight: FontWeight.w600,
+            color: const Color(0xFF333333),
+          ),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          _product.description,
+          style: TextStyle(
+            fontSize: isMobile ? 14 : 16,
+            color: const Color(0xFF666666),
+            height: 1.6,
+          ),
+        ),
+      ],
     );
   }
 }

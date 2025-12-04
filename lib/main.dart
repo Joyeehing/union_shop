@@ -10,7 +10,6 @@ import 'personalisation_page.dart';
 import 'widgets/footer.dart';
 import 'widgets/header.dart';
 import 'services/cart_service.dart';
-import 'models/cart_item.dart';
 
 void main() {
   runApp(const UnionShopApp());

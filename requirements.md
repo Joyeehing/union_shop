@@ -234,7 +234,6 @@ User stories
 
 Acceptance criteria
 - [x] Personalization form includes at least: text input, font selector, color selector, and position controls.
-- [ ] Changing any option updates a live preview instantly.
 - [x] Toggling options shows/hides dependent fields.
 - [x] Submitting personalization attaches the chosen options to the product selection/state.
 

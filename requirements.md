@@ -109,9 +109,9 @@ User stories
 
 Acceptance criteria
 - [x] Product page shows image carousel or single image, title, description and visible price.
-- [ ] Variant selectors (at least size or color) are present and update selected state when changed.
-- [ ] Quantity selector updates displayed quantity.
-- [ ] Tapping "Add to Cart" shows an acknowledgement (snack/toast/dialog). Persistence optional for basic.
+- [x] Variant selectors (at least size or color) are present and update selected state when changed.
+- [x] Quantity selector updates displayed quantity.
+- [x] Tapping "Add to Cart" shows an acknowledgement (snack/toast/dialog). Persistence optional for basic.
 
 ---
 
@@ -233,10 +233,10 @@ User stories
 - As a customer, I want personalization options to show/hide based on chosen features.
 
 Acceptance criteria
-- [ ] Personalization form includes at least: text input, font selector, color selector, and position controls.
+- [x] Personalization form includes at least: text input, font selector, color selector, and position controls.
 - [ ] Changing any option updates a live preview instantly.
-- [ ] Toggling options shows/hides dependent fields.
-- [ ] Submitting personalization attaches the chosen options to the product selection/state.
+- [x] Toggling options shows/hides dependent fields.
+- [x] Submitting personalization attaches the chosen options to the product selection/state.
 
 ---
 

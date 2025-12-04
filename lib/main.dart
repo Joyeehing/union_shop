@@ -9,6 +9,7 @@ import 'about_print_shack_page.dart';
 import 'personalisation_page.dart';
 import 'widgets/footer.dart';
 import 'widgets/header.dart';
+import 'services/cart_service.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -44,8 +45,15 @@ class UnionShopApp extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final CartService _cartService = CartService();
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -61,12 +69,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header
-            const Header(activePage: 'home'),
+    return ListenableBuilder(
+      listenable: _cartService,
+      builder: (context, child) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Header
+                Header(activePage: 'home', cartItemCount: _cartService.itemCount),
 
             // Hero Section
             LayoutBuilder(
@@ -218,6 +229,8 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+        );
+      },
     );
   }
 }
@@ -226,13 +239,103 @@ class ProductCard extends StatelessWidget {
   final String title;
   final String price;
   final String imageUrl;
+  final String productId;
 
   const ProductCard({
     super.key,
     required this.title,
     required this.price,
     required this.imageUrl,
+    this.productId = '1',
   });
+
+  void _showQuickAddDialog(BuildContext context) {
+    final cartService = CartService();
+    String selectedSize = 'M';
+    String selectedColor = 'Navy';
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setState) => AlertDialog(
+          title: Text(title),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Select Size:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: ['XS', 'S', 'M', 'L', 'XL', 'XXL'].map((size) {
+                  return ChoiceChip(
+                    label: Text(size),
+                    selected: selectedSize == size,
+                    onSelected: (selected) {
+                      setState(() => selectedSize = size);
+                    },
+                    selectedColor: const Color(0xFF4d2963),
+                    labelStyle: TextStyle(
+                      color: selectedSize == size ? Colors.white : Colors.black,
+                    ),
+                  );
+                }).toList(),
+              ),
+              const SizedBox(height: 16),
+              const Text('Select Color:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: ['Navy', 'Grey', 'Black', 'Purple'].map((color) {
+                  return ChoiceChip(
+                    label: Text(color),
+                    selected: selectedColor == color,
+                    onSelected: (selected) {
+                      setState(() => selectedColor = color);
+                    },
+                    selectedColor: const Color(0xFF4d2963),
+                    labelStyle: TextStyle(
+                      color: selectedColor == color ? Colors.white : Colors.black,
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final priceValue = double.parse(price.replaceAll('£', ''));
+                cartService.addItem(
+                  id: '$productId-$selectedSize-$selectedColor',
+                  name: title,
+                  imageUrl: imageUrl,
+                  price: priceValue,
+                  size: selectedSize,
+                  color: selectedColor,
+                );
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Added to cart!'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4d2963),
+                foregroundColor: Colors.white,
+              ),
+              child: const Text('Add to Cart'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -244,17 +347,35 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  color: Colors.grey[300],
-                  child: const Center(
-                    child: Icon(Icons.image_not_supported, color: Colors.grey),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      color: Colors.grey[300],
+                      child: const Center(
+                        child: Icon(Icons.image_not_supported, color: Colors.grey),
+                      ),
+                    );
+                  },
+                ),
+                Positioned(
+                  bottom: 8,
+                  right: 8,
+                  child: IconButton(
+                    onPressed: () => _showQuickAddDialog(context),
+                    icon: const Icon(Icons.add_shopping_cart),
+                    style: IconButton.styleFrom(
+                      backgroundColor: const Color(0xFF4d2963),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.all(8),
+                    ),
                   ),
-                );
-              },
+                ),
+              ],
             ),
           ),
           Column(                     

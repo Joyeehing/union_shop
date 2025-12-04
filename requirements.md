@@ -95,7 +95,7 @@ Acceptance criteria
 - [x] Collection page displays a grid/list of at least 8 product cards (hardcoded ok).
 - [x] Product card includes thumbnail image, title and price.
 - [x] Tapping a product card opens its product page route.
-- [ ] Filter/sort UI may be present and must reflect selected state even if not changing results.
+
 
 ---
 

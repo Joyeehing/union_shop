@@ -233,7 +233,9 @@ class _HeaderState extends State<Header> {
                             minWidth: 32,
                             minHeight: 32,
                           ),
-                          onPressed: _placeholderCallback,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/cart');
+                          },
                         ),
                       ],
                       IconButton(
@@ -358,7 +360,7 @@ class _HeaderState extends State<Header> {
                 title: const Text('Cart'),
                 onTap: () {
                   Navigator.pop(context);
-                  _placeholderCallback();
+                  Navigator.pushNamed(context, '/cart');
                 },
               ),
             ],

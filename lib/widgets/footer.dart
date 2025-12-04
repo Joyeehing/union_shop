@@ -8,32 +8,40 @@ class Footer extends StatelessWidget {
     return Container(
       width: double.infinity,
       color: Colors.grey[50],
-      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 80),
       child: LayoutBuilder(
         builder: (context, constraints) {
+          final isMobile = constraints.maxWidth < 900;
+          final horizontalPadding = isMobile ? 16.0 : 80.0;
+          
           // Responsive: single column on mobile, row on desktop
-          if (constraints.maxWidth < 900) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildAboutColumn(context),
-                const SizedBox(height: 20),
-                _buildHelpColumn(),
-                const SizedBox(height: 20),
-                _buildLatestOffersColumn(),
-              ],
+          if (isMobile) {
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 32, horizontal: horizontalPadding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildAboutColumn(context),
+                  const SizedBox(height: 20),
+                  _buildHelpColumn(),
+                  const SizedBox(height: 20),
+                  _buildLatestOffersColumn(isMobile),
+                ],
+              ),
             );
           } else {
-            return Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(flex: 1, child: _buildAboutColumn(context)),
-                const SizedBox(width: 80),
-                Expanded(flex: 2, child: _buildHelpColumn()),
-                const SizedBox(width: 40),
-                Expanded(flex: 3, child: _buildLatestOffersColumn()),
-              ],
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 32, horizontal: horizontalPadding),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(flex: 1, child: _buildAboutColumn(context)),
+                  const SizedBox(width: 80),
+                  Expanded(flex: 2, child: _buildHelpColumn()),
+                  const SizedBox(width: 40),
+                  Expanded(flex: 3, child: _buildLatestOffersColumn(isMobile)),
+                ],
+              ),
             );
           }
         },
@@ -121,7 +129,7 @@ class Footer extends StatelessWidget {
     );
   }
 
-  Widget _buildLatestOffersColumn() {
+  Widget _buildLatestOffersColumn(bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -135,68 +143,133 @@ class Footer extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            SizedBox(
-              width: 350,
-              height: 40,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Email Address',
-                  hintStyle: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF999999),
+        isMobile
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Email Address',
+                        hintStyle: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF999999),
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderRadius: BorderRadius.zero,
+                          borderSide: BorderSide(color: Color(0xFF4d2963)),
+                        ),
+                      ),
+                    ),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 10,
+                  const SizedBox(height: 8),
+                  SizedBox(
+                    height: 40,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Subscribe action placeholder
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4d2963),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        'SUBSCRIBE',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+                ],
+              )
+            : Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 40,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Email Address',
+                          hintStyle: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xFF999999),
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.zero,
+                            borderSide: BorderSide(color: Colors.grey[300]!),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.zero,
+                            borderSide: BorderSide(color: Colors.grey[300]!),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius: BorderRadius.zero,
+                            borderSide: BorderSide(color: Color(0xFF4d2963)),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  SizedBox(
+                    height: 40,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Subscribe action placeholder
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4d2963),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero,
+                        ),
+                        elevation: 0,
+                      ),
+                      child: const Text(
+                        'SUBSCRIBE',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                    ),
                   ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.zero,
-                    borderSide: BorderSide(color: Color(0xFF4d2963)),
-                  ),
-                ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Subscribe action placeholder
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4d2963),
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  'SUBSCRIBE',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

@@ -217,10 +217,10 @@ User stories
 - As a shopper, I want to remove items and see totals recalc immediately.
 
 Acceptance criteria
-- [ ] Cart page lists added items with image, title, unit price, quantity control and line total.
-- [ ] Changing quantity updates the line total and cart subtotal immediately.
-- [ ] Removing an item deletes it from the cart and updates totals.
-- [ ] Checkout button triggers a simulated confirmation page or dialog and clears the cart for simulation.
+- [x] Cart page lists added items with image, title, unit price, quantity control and line total.
+- [x] Changing quantity updates the line total and cart subtotal immediately.
+- [x] Removing an item deletes it from the cart and updates totals.
+- [x] Checkout button triggers a simulated confirmation page or dialog and clears the cart for simulation.
 
 ---
 

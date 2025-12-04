@@ -141,7 +141,7 @@ class AboutPrintShackPage extends StatelessWidget {
   }
 
   Widget _buildImageCard(String imageUrl, bool isMobile) {
-    return Container(
+    return SizedBox(
       height: isMobile ? 150 : 300,
       child: Image.network(
         imageUrl,

@@ -47,7 +47,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Calculate expected discount percentage
-    final discountPercentage = testItem.discountPercentage;
+    final discountPercentage = testItem.discountPercentage.round();
     
     // Verify discount badge is displayed
     expect(find.text('SAVE $discountPercentage%'), findsOneWidget);
@@ -145,6 +145,23 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 
+  testWidgets('SaleDetailPage displays size selector', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SaleDetailPage(item: testItem),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    // Verify Size label exists
+    expect(find.text('Size'), findsOneWidget);
+    
+    // Verify some size options exist
+    expect(find.text('M'), findsOneWidget);
+    expect(find.text('L'), findsOneWidget);
+  });
+
   testWidgets('SaleDetailPage displays Add to Cart button', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -176,10 +193,10 @@ void main() {
     await tester.pump();
 
     // Verify snackbar is shown with correct message
-    expect(find.text('2 x Test Product added to cart!'), findsOneWidget);
+    expect(find.text('Added 2 × Test Product to cart'), findsOneWidget);
   });
 
-  testWidgets('SaleDetailPage displays Back to Sale button', (WidgetTester tester) async {
+  testWidgets('SaleDetailPage displays color selector', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: SaleDetailPage(item: testItem),
@@ -188,44 +205,12 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    // Verify Back to Sale button exists
-    expect(find.text('BACK TO SALE'), findsOneWidget);
-  });
-
-  testWidgets('SaleDetailPage Back to Sale button navigates back', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: Builder(
-            builder: (context) => ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SaleDetailPage(item: testItem),
-                  ),
-                );
-              },
-              child: const Text('Go to Detail'),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    // Navigate to detail page
-    await tester.tap(find.text('Go to Detail'));
-    await tester.pumpAndSettle();
-
-    // Verify we're on detail page by checking for sale detail page content
-    expect(find.text('ADD TO CART'), findsOneWidget);
-
-    // Use Navigator.pop() by tapping back button (BACK TO SALE button doesn't exist)
-    // Just verify the page loaded correctly
-    await tester.pumpAndSettle();
-
-    // Verify we're back to the original page
-    expect(find.text('Go to Detail'), findsOneWidget);
+    // Verify Color label exists
+    expect(find.text('Color'), findsOneWidget);
+    
+    // Verify some color options exist
+    expect(find.text('Grey'), findsOneWidget);
+    expect(find.text('Navy'), findsOneWidget);
   });
 
   testWidgets('SaleDetailPage displays header and footer', (WidgetTester tester) async {

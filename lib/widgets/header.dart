@@ -35,7 +35,7 @@ class _HeaderState extends State<Header> {
     final isDesktop = screenWidth > 768;
 
     return Container(
-      height: 100,
+      height: isDesktop ? 100 : 135,
       color: Colors.white,
       child: Column(
         children: [

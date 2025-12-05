@@ -167,14 +167,47 @@ class _SaleDetailPageState extends State<SaleDetailPage> {
         ),
         const SizedBox(height: 20),
         
-        // Price (no sale badge, just regular price)
-        Text(
-          '£${widget.item.salePrice.toStringAsFixed(2)}',
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF333333),
-          ),
+        // Prices - show original with strikethrough and sale price
+        Row(
+          children: [
+            // Sale price
+            Text(
+              '£${widget.item.salePrice.toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF333333),
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Original price with strikethrough
+            Text(
+              '£${widget.item.originalPrice.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey[600],
+                decoration: TextDecoration.lineThrough,
+              ),
+            ),
+            const SizedBox(width: 12),
+            // Discount badge
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                'SAVE ${widget.item.discountPercentage.round()}%',
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 12),
         
@@ -300,7 +333,7 @@ class _SaleDetailPageState extends State<SaleDetailPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Quantity',
+              'Quantity:',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

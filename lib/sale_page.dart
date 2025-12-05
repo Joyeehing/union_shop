@@ -467,15 +467,25 @@ class _SalePageState extends State<SalePage> {
                 width: double.infinity,
                 color: Colors.grey[200],
                 child: item.imageUrl != null
-                    ? Image.network(
-                        item.imageUrl!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Center(
-                            child: Icon(Icons.image, size: 80, color: Colors.grey),
-                          );
-                        },
-                      )
+                    ? (item.imageUrl!.startsWith('assets/')
+                        ? Image.asset(
+                            item.imageUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                child: Icon(Icons.image, size: 80, color: Colors.grey),
+                              );
+                            },
+                          )
+                        : Image.network(
+                            item.imageUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                child: Icon(Icons.image, size: 80, color: Colors.grey),
+                              );
+                            },
+                          ))
                     : const Center(
                         child: Icon(Icons.image, size: 80, color: Colors.grey),
                       ),
@@ -569,6 +579,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 35.00,
     salePrice: 24.99,
     description: 'Comfortable cotton hoodie with university logo',
+    imageUrl: 'assets/image/lilac.jpg',
   ),
   SaleItem(
     id: '2',
@@ -576,6 +587,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 45.00,
     salePrice: 29.99,
     description: 'Spacious backpack perfect for students',
+    imageUrl: 'assets/image/lightblue.jpg',
   ),
   SaleItem(
     id: '3',
@@ -583,6 +595,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 18.00,
     salePrice: 12.99,
     description: 'Classic campus t-shirt in various colors',
+    imageUrl: 'assets/image/pink.jpg',
   ),
   SaleItem(
     id: '4',
@@ -590,6 +603,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 15.00,
     salePrice: 9.99,
     description: 'Set of 3 premium notebooks',
+    imageUrl: 'assets/image/baige.jpg',
   ),
   SaleItem(
     id: '5',
@@ -597,6 +611,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 12.00,
     salePrice: 7.99,
     description: 'Reusable stainless steel water bottle',
+    imageUrl: 'assets/image/lightgreen.jpg',
   ),
   SaleItem(
     id: '6',
@@ -604,6 +619,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 65.00,
     salePrice: 45.00,
     description: 'Classic varsity jacket with embroidered logo',
+    imageUrl: 'assets/image/lightbrown.jpg',
   ),
   SaleItem(
     id: '7',
@@ -611,6 +627,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 25.00,
     salePrice: 16.99,
     description: 'Protective laptop sleeve for 13-15 inch laptops',
+    imageUrl: 'assets/image/lilac.jpg',
   ),
   SaleItem(
     id: '8',
@@ -618,6 +635,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 20.00,
     salePrice: 13.99,
     description: 'Adjustable baseball cap with university branding',
+    imageUrl: 'assets/image/lightblue.jpg',
   ),
   SaleItem(
     id: '9',
@@ -625,6 +643,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 30.00,
     salePrice: 19.99,
     description: 'Comfortable sweatpants for casual wear',
+    imageUrl: 'assets/image/pink.jpg',
   ),
   SaleItem(
     id: '10',
@@ -632,6 +651,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 40.00,
     salePrice: 27.99,
     description: 'Durable gym bag with multiple compartments',
+    imageUrl: 'assets/image/baige.jpg',
   ),
   SaleItem(
     id: '11',
@@ -639,6 +659,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 38.00,
     salePrice: 25.99,
     description: 'Zip-up hoodie with front pockets',
+    imageUrl: 'assets/image/lightgreen.jpg',
   ),
   SaleItem(
     id: '12',
@@ -646,6 +667,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 15.00,
     salePrice: 10.99,
     description: 'Warm knitted beanie with university logo',
+    imageUrl: 'assets/image/lightbrown.jpg',
   ),
   SaleItem(
     id: '13',
@@ -653,6 +675,7 @@ final List<SaleItem> saleItems = [
     originalPrice: 22.00,
     salePrice: 14.50,
     description: 'Eco-friendly canvas tote bag with print',
+    imageUrl: 'assets/image/lilac.jpg',
   ),
   SaleItem(
     id: '14',
@@ -660,5 +683,6 @@ final List<SaleItem> saleItems = [
     originalPrice: 16.00,
     salePrice: 11.00,
     description: 'Pack of 3 comfortable sports socks',
+    imageUrl: 'assets/image/lightblue.jpg',
   ),
 ];

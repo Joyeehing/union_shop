@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'widgets/header.dart';
 import 'widgets/footer.dart';
-import 'sale_detail_page.dart';
 import 'services/cart_service.dart';
 
 class SalePage extends StatefulWidget {
@@ -448,11 +447,10 @@ class _SalePageState extends State<SalePage> {
   Widget _buildSaleItem(BuildContext context, SaleItem item) {
     return InkWell(
       onTap: () {
-        Navigator.push(
+        Navigator.pushNamed(
           context,
-          MaterialPageRoute(
-            builder: (context) => SaleDetailPage(item: item),
-          ),
+          '/sale/detail',
+          arguments: item,
         );
       },
       child: Container(

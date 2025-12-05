@@ -158,8 +158,8 @@ User stories
 Acceptance criteria
 - [x] All main pages have addressable routes (e.g., /, /collections, /product/:id).
 - [x] Navigating via in-app links updates the browser URL.
-- [ ] Reloading a route loads the expected page (web).
-- [ ] Browser/device back and forward work correctly.
+- [x] Reloading a route loads the expected page (web).
+- [x] Browser/device back and forward work correctly.
 
 ---
 

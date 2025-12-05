@@ -56,6 +56,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final CartService _cartService = CartService();
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -81,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Header
                 Header(activePage: 'home', cartItemCount: _cartService.itemCount),
 
-            // Hero Section
+            // Hero Section Slider
             LayoutBuilder(
               builder: (context, constraints) {
                 final isMobile = constraints.maxWidth < 768;
@@ -90,77 +98,92 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   child: Stack(
                     children: [
-                      // Background image
-                      Positioned.fill(
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
+                      // PageView for slider
+                      PageView(
+                        controller: _pageController,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
+                        children: [
+                          _buildHeroSlide(
+                            imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                            title: 'Essential Range - Over 20% OFF',
+                            subtitle: 'Over 20% off our Essential Range. Come and get yours while stock lasts!',
+                            isMobile: isMobile,
                           ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black.withValues(alpha: 0.7),
-                            ),
+                          _buildHeroSlide(
+                            imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                            title: 'Welcome to Union Shop',
+                            subtitle: 'Discover our latest collection of university merchandise',
+                            isMobile: isMobile,
                           ),
-                        ),
+                          _buildHeroSlide(
+                            imageUrl: 'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                            title: 'Premium Quality',
+                            subtitle: 'High-quality products for students and alumni',
+                            isMobile: isMobile,
+                          ),
+                        ],
                       ),
-                      // Content overlay
+                      // Page indicators
                       Positioned(
-                        left: isMobile ? 16 : 24,
-                        right: isMobile ? 16 : 24,
-                        top: isMobile ? 40 : 80,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Placeholder Hero Title',
-                              style: TextStyle(
-                                fontSize: isMobile ? 24 : 32,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                height: 1.2,
+                        bottom: 20,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: List.generate(3, (index) {
+                            return Container(
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              width: _currentPage == index ? 24 : 8,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: _currentPage == index
+                                    ? Colors.white
+                                    : Colors.white.withValues(alpha: 0.5),
+                                borderRadius: BorderRadius.circular(4),
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              "This is placeholder text for the hero section.",
-                              style: TextStyle(
-                                fontSize: isMobile ? 16 : 20,
-                                color: Colors.white,
-                                height: 1.5,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 32),
-                            ElevatedButton(
-                              onPressed: placeholderCallbackForButtons,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4d2963),
-                                foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: isMobile ? 24 : 32,
-                                  vertical: isMobile ? 12 : 16,
-                                ),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero,
-                                ),
-                              ),
-                              child: Text(
-                                'BROWSE PRODUCTS',
-                                style: TextStyle(
-                                  fontSize: isMobile ? 12 : 14,
-                                  letterSpacing: 1,
-                                ),
-                              ),
-                            ),
-                          ],
+                            );
+                          }),
                         ),
                       ),
+                      // Navigation arrows for desktop
+                      if (!isMobile) ...[
+                        Positioned(
+                          left: 16,
+                          top: 0,
+                          bottom: 0,
+                          child: Center(
+                            child: IconButton(
+                              icon: const Icon(Icons.chevron_left, color: Colors.white, size: 40),
+                              onPressed: () {
+                                _pageController.previousPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 16,
+                          top: 0,
+                          bottom: 0,
+                          child: Center(
+                            child: IconButton(
+                              icon: const Icon(Icons.chevron_right, color: Colors.white, size: 40),
+                              onPressed: () {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 );
@@ -233,6 +256,87 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
         );
       },
+    );
+  }
+
+  Widget _buildHeroSlide({
+    required String imageUrl,
+    required String title,
+    required String subtitle,
+    required bool isMobile,
+  }) {
+    return Stack(
+      children: [
+        // Background image
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imageUrl),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withValues(alpha: 0.7),
+              ),
+            ),
+          ),
+        ),
+        // Content overlay
+        Positioned(
+          left: isMobile ? 16 : 24,
+          right: isMobile ? 16 : 24,
+          top: isMobile ? 40 : 80,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: isMobile ? 24 : 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  height: 1.2,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: isMobile ? 16 : 20,
+                  color: Colors.white,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: placeholderCallbackForButtons,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF4d2963),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isMobile ? 24 : 32,
+                    vertical: isMobile ? 12 : 16,
+                  ),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.zero,
+                  ),
+                ),
+                child: Text(
+                  'BROWSE PRODUCTS',
+                  style: TextStyle(
+                    fontSize: isMobile ? 12 : 14,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/main.dart';
+import 'dart:io';
 
 void main() {
+  setUpAll(() {
+    HttpOverrides.global = null;
+  });
+
   group('Home Page Tests', () {
     testWidgets('should display home page with basic elements', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that basic UI elements are present
-      expect(
-        find.text('PLACEHOLDER HEADER TEXT - STUDENTS TO UPDATE!'),
-        findsOneWidget,
-      );
-      expect(find.text('Placeholder Hero Title'), findsOneWidget);
-      expect(find.text('PLACEHOLDER PRODUCTS SECTION'), findsOneWidget);
-      expect(find.text('BROWSE PRODUCTS'), findsOneWidget);
-      expect(find.text('VIEW ALL PRODUCTS'), findsOneWidget);
+      expect(find.text('Essential Range - Over 20% OFF'), findsOneWidget);
+      expect(find.text('PRODUCTS SECTION'), findsOneWidget);
+      expect(find.text('BROWSE PRODUCTS'), findsWidgets);
     });
 
     testWidgets('should display product cards', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that product cards are displayed
       expect(find.text('Placeholder Product 1'), findsOneWidget);
@@ -38,7 +38,7 @@ void main() {
 
     testWidgets('should display header icons', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that header icons are present
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -48,14 +48,11 @@ void main() {
 
     testWidgets('should display footer', (tester) async {
       await tester.pumpWidget(const UnionShopApp());
-      await tester.pump();
+      await tester.pumpAndSettle();
 
       // Check that footer is present
-      expect(find.text('Placeholder Footer'), findsOneWidget);
-      expect(
-        find.text('Students should customise this footer section'),
-        findsOneWidget,
-      );
+      expect(find.text('ABOUT'), findsOneWidget);
+      expect(find.text('HELP AND INFORMATION'), findsOneWidget);
     });
   });
 }

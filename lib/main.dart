@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'about_page.dart';
 import 'sale_page.dart';
+import 'sale_detail_page.dart';
 import 'collections_page.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
@@ -27,21 +28,46 @@ class UnionShopApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4d2963)),
       ),
-      home: const HomeScreen(),
-      // By default, the app starts at the '/' route, which is the HomeScreen
       initialRoute: '/',
-      // When navigating to '/product', build and return the ProductPage
-      // In your browser, try this link: http://localhost:49856/#/product
-      routes: {
-        '/product': (context) => const ProductPage(),
-        '/about': (context) => const AboutPage(),
-        '/sale': (context) => const SalePage(),
-        '/collections': (context) => const CollectionsPage(),
-        '/login': (context) => const LoginPage(),
-        '/signup': (context) => const SignupPage(),
-        '/printshack': (context) => const AboutPrintShackPage(),
-        '/personalisation': (context) => const PersonalisationPage(),
-        '/cart': (context) => const CartPage(),
+      onGenerateRoute: (settings) {
+        // Handle route with arguments
+        if (settings.name == '/sale/detail') {
+          final item = settings.arguments as SaleItem?;
+          if (item != null) {
+            return MaterialPageRoute(
+              builder: (context) => SaleDetailPage(item: item),
+              settings: settings,
+            );
+          }
+        }
+        
+        // Default routes
+        final routes = <String, WidgetBuilder>{
+          '/': (context) => const HomeScreen(),
+          '/product': (context) => const ProductPage(),
+          '/about': (context) => const AboutPage(),
+          '/sale': (context) => const SalePage(),
+          '/collections': (context) => const CollectionsPage(),
+          '/login': (context) => const LoginPage(),
+          '/signup': (context) => const SignupPage(),
+          '/printshack': (context) => const AboutPrintShackPage(),
+          '/personalisation': (context) => const PersonalisationPage(),
+          '/cart': (context) => const CartPage(),
+        };
+
+        final builder = routes[settings.name];
+        if (builder != null) {
+          return MaterialPageRoute(
+            builder: builder,
+            settings: settings,
+          );
+        }
+
+        // Fallback to home for unknown routes
+        return MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+          settings: settings,
+        );
       },
     );
   }

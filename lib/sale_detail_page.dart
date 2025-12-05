@@ -137,15 +137,25 @@ class _SaleDetailPageState extends State<SaleDetailPage> {
         color: Colors.grey[200],
       ),
       child: widget.item.imageUrl != null
-          ? Image.network(
-              widget.item.imageUrl!,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return const Center(
-                  child: Icon(Icons.image, size: 150, color: Colors.grey),
-                );
-              },
-            )
+          ? (widget.item.imageUrl!.startsWith('assets/')
+              ? Image.asset(
+                  widget.item.imageUrl!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(Icons.image, size: 150, color: Colors.grey),
+                    );
+                  },
+                )
+              : Image.network(
+                  widget.item.imageUrl!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(Icons.image, size: 150, color: Colors.grey),
+                    );
+                  },
+                ))
           : const Center(
               child: Icon(Icons.image, size: 150, color: Colors.grey),
             ),
